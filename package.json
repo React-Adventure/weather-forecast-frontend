@@ -1,0 +1,42 @@
+{
+  "name": "weather-forecast-frontend",
+  "version": "1.0.0",
+  "description": "Weather forecast app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack serve",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/React-Adventure/weather-forecast-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/React-Adventure/weather-forecast-frontend/issues"
+  },
+  "homepage": "https://github.com/React-Adventure/weather-forecast-frontend#readme",
+  "dependencies": {
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
+    "redux": "^4.1.2",
+    "redux-saga": "^1.1.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.4",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
