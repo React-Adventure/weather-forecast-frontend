@@ -1,5 +1,5 @@
 ### Weather forecast app
-[Click to open the app](https://github.com/react-adventure.github.io/weather-forecast-frontend/)
+[Click to open the app](https://react-adventure.github.io/weather-forecast-frontend/)
 # Build and run the app
 Run code locally: 
 `npm run dev`
