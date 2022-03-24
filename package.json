@@ -1,11 +1,14 @@
 {
   "name": "weather-forecast-frontend",
+  "homepage": "https://github.com/react-adventure.github.io/weather-forecast-frontend/",
   "version": "1.0.0",
   "description": "Weather forecast app",
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve",
-    "build": "webpack"
+    "build": "webpack",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -17,7 +20,6 @@
   "bugs": {
     "url": "https://github.com/React-Adventure/weather-forecast-frontend/issues"
   },
-  "homepage": "https://github.com/React-Adventure/weather-forecast-frontend#readme",
   "dependencies": {
     "prop-types": "^15.8.1",
     "react": "^17.0.2",

@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   entry:  path.join(__dirname, "src", "index.js"),
   output: {
-    path:path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist")
   },
   devtool: 'inline-source-map',
   module: {
