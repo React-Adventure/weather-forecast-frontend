@@ -2,7 +2,8 @@ name: Deploy Weather App
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
   pull_request:
 
 jobs:
