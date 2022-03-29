@@ -15,14 +15,16 @@ const Home = (props) => {
         cleanSearchResults();
         debounceSearch.cancel();
     }
-}, []);
+  }, []);
 
   const debounceSearch = useCallback(
     _.debounce(citySearch => {
         if(citySearch && cityTipsActive) {
           fetchSearchCities(citySearch);
+        } else {
+          cleanSearchResults();
         }
-    }, 300), 
+    }, 0), 
   [citySearch, cityTipsActive]);
 
   const updateCitySearch = (event) => {
@@ -72,6 +74,7 @@ const Home = (props) => {
           type="text" 
           placeholder="Type anything..." 
           id="search" 
+          autocomplete="off"
           value={citySearch}
           onChange={updateCitySearch}
         />
