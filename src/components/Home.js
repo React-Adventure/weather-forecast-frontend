@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySearch';
 import _ from 'lodash';
@@ -8,6 +8,7 @@ import _ from 'lodash';
 const Home = (props) => {
   const { fetchSearchCities, cities, cleanSearchResults } = props;
   const [citySearch, setCitySearch] = useState('');
+  const [cityTipsActive, setCityTipsActive] = useState(true);
 
   useEffect(() => {
     return () => {
@@ -18,29 +19,43 @@ const Home = (props) => {
 
   const debounceSearch = useCallback(
     _.debounce(citySearch => {
-        if(citySearch) {
+        if(citySearch && cityTipsActive) {
           fetchSearchCities(citySearch);
         }
     }, 300), 
-  [citySearch]);
+  [citySearch, cityTipsActive]);
 
   const updateCitySearch = (event) => {
+    setCityTipsActive(true);
     const { value } = event.target;
     setCitySearch(value);
 
     debounceSearch(value);
   };
 
+  const handleClickedCity = (event) => {
+    const cityNameElement = event.currentTarget.getElementsByClassName('city-name')[0];
+    setCitySearch(cityNameElement.innerText);
+    
+    event.currentTarget.parentNode.classList.remove('active');
+    setCityTipsActive(false);
+  }
+
   const searchedCities = (citySearch) => {
     const mathcedCities = cities.filter(city => city.name.toUpperCase().startsWith(citySearch.toUpperCase()))
     .map(city => {
-      return <li>
-        {city.name}
+      return <li className="search-results-item" onClick={handleClickedCity}>
+        <FontAwesomeIcon
+        className="location-dot-icon"
+          icon={faLocationDot} 
+          size="2x"
+        /> 
+        <span className="city-name">{city.name}</span>
       </li>
     }) 
-    return <ul>
+    return mathcedCities ? <ul className="search-results-wrap active">
       {mathcedCities}
-    </ul>
+    </ul>  : <></>
   };
 
   return (
@@ -49,8 +64,9 @@ const Home = (props) => {
       
       <div className="search-input-wrap"> 
         <FontAwesomeIcon
+        className="search-icon"
           icon={faSearch} 
-          size="1x"
+          size="lg"
         />       
         <input 
           type="text" 
@@ -59,13 +75,13 @@ const Home = (props) => {
           value={citySearch}
           onChange={updateCitySearch}
         />
-        {searchedCities(citySearch)}
         <span 
           className="search-btn"
           // onClick={searchCocktail}
         >
         </span> 
     </div>
+        {cityTipsActive && searchedCities(citySearch)}
     </div>
   );
 };
