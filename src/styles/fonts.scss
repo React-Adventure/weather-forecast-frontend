@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'Rochester';
+  src: local('Rochester-Regular'),
+   url("../fonts/Rochester-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Asap';
+  src: local('Asap-Regular'),
+   url("../fonts/Asap-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: local('Quicksand-Regular'),
+   url("../fonts/Quicksand-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: local('Quicksand-Regular'),
+   url("../fonts/Quicksand-Medium.ttf") format("truetype");
+  font-weight: medium;
+}
+
+.font-face-asap {
+  font-family: 'Asap';
+}

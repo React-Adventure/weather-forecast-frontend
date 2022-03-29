@@ -1,4 +1,68 @@
+@import './fonts.scss';
+
+body {
+  background-color: rgb(194, 199, 199);
+  font-family: 'Quicksand';
+}
+
 h1 {
   text-align: center;
   color: rgb(109, 83, 204);
 }
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 70%;
+  margin: 0 auto;
+}
+
+.search-city {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+nav {
+  max-width: 80%;
+}
+
+.seach-line,
+.search-btn {
+  margin-bottom: 10px;
+}
+
+.search-input-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 80%;
+  margin: 4px 0;
+  margin-bottom: 30px;
+  padding: 20px;
+
+  border: 1px solid #1B5E20;
+  border-radius: 5px;
+
+  background-color: #fff;
+}
+
+#search {
+  flex-grow: 1;
+
+  background-color: transparent;
+  font-size: 18px;
+  color: #000000;
+}
+
+.search-btn {
+  color: #1B5E20;
+
+  cursor: pointer;
+}
+
