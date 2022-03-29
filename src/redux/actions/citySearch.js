@@ -29,11 +29,8 @@ export const fetchSearchCities = (search) => {
         type: FETCH_SEARCH_CITY_LOADING
       });
 
-      let json = [];
+      const json = Cities;
 
-      if(search !== '') {
-        json = Cities;
-      } 
       dispatch({
         type: FETCH_SEARCH_CITY_SUCCESS,
         payload: json
