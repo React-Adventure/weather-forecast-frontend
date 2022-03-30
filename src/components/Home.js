@@ -66,9 +66,18 @@ const Home = (props) => {
       );
     });
     
-    return mathcedCities ? <ul className="search-results-wrap active">
-      {mathcedCities}
-    </ul>  : <></>
+    return (
+      <ul className="search-results-wrap active">
+        { mathcedCities.length !== 0 ? mathcedCities : 
+          <li 
+            key={'123'}
+            className="search-results-item" 
+          >
+            <span className="city-name-not-found">No cities found</span>
+          </li>
+        }
+      </ul>  
+    );
   };
  
   const searchBtnHandler = () => {
