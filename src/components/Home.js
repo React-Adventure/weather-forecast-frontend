@@ -44,6 +44,10 @@ const Home = (props) => {
   }
 
   const searchedCities = (citySearch) => {
+    if(!citySearch) {
+      return;
+    }
+
     const mathcedCities = cities.filter(city => city.name.toUpperCase().startsWith(citySearch.toUpperCase()))
     .map(city => {
       return (
