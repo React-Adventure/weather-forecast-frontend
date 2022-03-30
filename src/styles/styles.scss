@@ -1,6 +1,10 @@
 @import './fonts.scss';
+@import './variables.scss';
+@import './media.scss';
 
+//********************* COMMON STYLES *********************
 body {
+  box-sizing: border-box;
   background-color: rgb(194, 199, 199);
   font-family: 'Quicksand';
 }
@@ -8,7 +12,7 @@ body {
 h1 {
   font-weight: 400;
   text-align: center;
-  color: rgb(109, 83, 204);
+  color: $theme-color;
 }
 
 .wrap {
@@ -20,17 +24,17 @@ h1 {
   margin: 0 auto;
 }
 
-.search-city {
+//********************* SEARCH INPUT *********************
+
+.search-line-wrap {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-width: 100%;
+  flex-direction: column;
+  width: 80%;
 }
 
-.seach-line,
-.search-btn {
-  margin-bottom: 10px;
+.search-wrap {
+  display: flex;
+  width: 100%;
 }
 
 .search-input-wrap {
@@ -38,16 +42,13 @@ h1 {
   justify-content: space-between;
   align-items: center;
 
-  width: 80%;
+  width: 100%;
   padding: 15px;
-
-  // border: 1px solid #1B5E20;
+  
   border-bottom: 1px solid #bdb7b7;
 
   background-color: #fff;
 }
-
-
 
 #search {
   flex-grow: 1;
@@ -64,17 +65,19 @@ h1 {
 
 #search,
 #search:focus {
-  outline: none;
-  transition: none !important;
   border-bottom: none !important;
+  box-shadow: none!important;
 }
+
+//********************* SEARCH RESULTS UL *********************
 
 .search-results-wrap {
   display: none;
   flex-direction: column;
   align-items: flex-start;
+  align-self: flex-start;
 
-  width: 80%;
+  width: 100%;
   max-height: 350px;
   margin: 0;
   padding-top: 0 !important;
@@ -101,6 +104,8 @@ h1 {
   cursor: pointer;
 }
 
+//********************* SEARCH ICONS  *********************
+
 .location-dot-icon {
   margin-right: 15px;
   color: #ccc;
@@ -108,6 +113,28 @@ h1 {
 
 .search-icon {
   padding-right: 10px;
-  color: #ec3c3c;
+  color: $theme-color;
   cursor: pointer;
+}
+
+//********************* SEARCH BTN *********************
+.search-btn {
+  flex-grow: 1;
+  padding: 15px; 
+  height: 73px;
+
+  color: #fff; 
+  border: none;
+
+  font-size: large;
+  cursor: pointer;
+}
+
+.search-btn,
+.search-btn:focus {
+  background-color: #ec3c3c;
+}
+
+.search-btn:active {
+  background-color: #b83030 !important;
 }

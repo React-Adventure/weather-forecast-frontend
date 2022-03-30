@@ -46,45 +46,57 @@ const Home = (props) => {
   const searchedCities = (citySearch) => {
     const mathcedCities = cities.filter(city => city.name.toUpperCase().startsWith(citySearch.toUpperCase()))
     .map(city => {
-      return <li className="search-results-item" onClick={handleClickedCity}>
-        <FontAwesomeIcon
-        className="location-dot-icon"
-          icon={faLocationDot} 
-          size="2x"
-        /> 
-        <span className="city-name">{city.name}</span>
-      </li>
-    }) 
+      return (
+        <li 
+        key={city.country + city.name}
+          className="search-results-item" 
+          onClick={handleClickedCity}
+        >
+          <FontAwesomeIcon
+          className="location-dot-icon"
+            icon={faLocationDot} 
+            size="2x"
+          /> 
+          <span className="city-name">{city.name}</span>
+        </li>
+      );
+    });
+    
     return mathcedCities ? <ul className="search-results-wrap active">
       {mathcedCities}
     </ul>  : <></>
+  };
+ 
+  const searchBtnHandler = () => {
+    console.log('Btn clicked!');
   };
 
   return (
     <div className='wrap'>
       <h1>Weather Forecast App</h1>
-      
-      <div className="search-input-wrap"> 
-        <FontAwesomeIcon
-        className="search-icon"
-          icon={faSearch} 
-          size="lg"
-        />       
-        <input 
-          type="text" 
-          placeholder="Type anything..." 
-          id="search" 
-          autocomplete="off"
-          value={citySearch}
-          onChange={updateCitySearch}
-        />
-        <span 
-          className="search-btn"
-          // onClick={searchCocktail}
-        >
-        </span> 
-    </div>
-        {cityTipsActive && searchedCities(citySearch)}
+      <div className="search-wrap"> 
+        <div className="search-line-wrap">
+          <div className="search-input-wrap"> 
+            <FontAwesomeIcon
+            className="search-icon"
+              icon={faSearch} 
+              size="lg"
+            />       
+            <input 
+              type="text" 
+              placeholder="Type anything..." 
+              id="search" 
+              autoComplete="off"
+              value={citySearch}
+              onChange={updateCitySearch}
+            />
+          </div>
+            
+            {cityTipsActive && searchedCities(citySearch)}
+        </div>       
+          
+            <button className="search-btn" onClick={searchBtnHandler}>Search</button>
+        </div>
     </div>
   );
 };
