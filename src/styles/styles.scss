@@ -29,6 +29,10 @@ h1 {
   margin: 0 auto;
 }
 
+.justify-content-center {
+  justify-content: center;
+}
+
 //********************* SEARCH INPUT *********************
 
 .search-line-wrap {
@@ -125,13 +129,17 @@ h1 {
 
 .location-dot-icon {
   margin-right: 15px;
-  color: $theme-color;
 }
 
 .search-icon {
   padding-right: 10px;
-  color: $theme-color;
   cursor: pointer;
+}
+
+.location-dot-icon,
+.search-icon,
+.spinner-icon {
+  color: $theme-color;
 }
 
 //********************* SEARCH BTN *********************

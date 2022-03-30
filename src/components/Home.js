@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLocationDot, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySearch';
 import _ from 'lodash';
 
 const Home = (props) => {
-  const { fetchSearchCities, cities, cleanSearchResults } = props;
+  const { fetchSearchCities, cities, cleanSearchResults, loader } = props;
   const [citySearch, setCitySearch] = useState('');
   const [cityTipsActive, setCityTipsActive] = useState(true);
 
@@ -24,7 +24,7 @@ const Home = (props) => {
         } else {
           cleanSearchResults();
         }
-    }, 0), 
+    }), 
   [citySearch, cityTipsActive]);
 
   const updateCitySearch = (event) => {
@@ -71,9 +71,16 @@ const Home = (props) => {
         { mathcedCities.length !== 0 ? mathcedCities : 
           <li 
             key={'123'}
-            className="search-results-item" 
+            className="search-results-item justify-content-center" 
           >
-            <span className="city-name-not-found">No cities found</span>
+            {loader ? 
+              <FontAwesomeIcon
+                className="fa-pulse spinner-icon"
+                icon={faSpinner} 
+                size="2x"
+              />  : 
+              <span>No cities found</span>
+            }
           </li>
         }
       </ul>  
@@ -117,6 +124,7 @@ const Home = (props) => {
 const mapStateToProps = state => {
   return {
     cities: state.citiesData.cities,
+    loader : state.citiesData.loader
   };
 };
 

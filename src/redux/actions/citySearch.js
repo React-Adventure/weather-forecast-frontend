@@ -31,10 +31,12 @@ export const fetchSearchCities = (search) => {
 
       const json = Cities.sort((curr, next) => (curr.name > next.name) ? 1 : ((next.name > curr.name) ? -1 : 0));
 
-      dispatch({
-        type: FETCH_SEARCH_CITY_SUCCESS,
-        payload: json
-      });
+      setTimeout(() => {
+        dispatch({
+          type: FETCH_SEARCH_CITY_SUCCESS,
+          payload: json
+        });
+      }, 2000);
 
     } catch(err) {
       console.log(err.toString());
