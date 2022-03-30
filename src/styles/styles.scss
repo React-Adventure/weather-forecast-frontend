@@ -46,11 +46,10 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 74px;
 
   width: 100%;
   padding: 15px;
-  
-  border-bottom: 1px solid #bdb7b7;
 
   background-color: #FEE8EE;
 }
@@ -93,7 +92,6 @@ h1 {
 
   border-bottom: 1px solid #bdb7b7;
 
-  background-color: #fff;
   overflow: auto;
 }
 
@@ -118,6 +116,11 @@ h1 {
   border: none;
 }
 
+.search-results-item:first-child {
+  border-top: 1px solid #bdb7b7;
+}
+
+
 //********************* SEARCH ICONS  *********************
 
 .location-dot-icon {
@@ -135,12 +138,12 @@ h1 {
 .search-btn {
   flex-grow: 1;
   padding: 15px; 
-  height: 73px;
+  height: 74px;
 
   color: #fff; 
   border: none;
-
   font-size: large;
+
   cursor: pointer;
 }
 
@@ -151,4 +154,13 @@ h1 {
 
 .search-btn:active {
   background-color: #9b779a !important;
+}
+
+
+.search-btn {
+  box-shadow: 0 1px 0 $theme-color;
+}
+
+.search-input-wrap {
+  box-shadow: 0 1px 0 #FEE8EE;
 }
