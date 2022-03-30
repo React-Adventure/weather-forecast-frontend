@@ -95,6 +95,7 @@ h1 {
   padding-top: 0 !important;
 
   border-bottom: 1px solid #bdb7b7;
+  border-top: 1px solid #bdb7b7;
 
   overflow: auto;
 }
@@ -119,11 +120,6 @@ h1 {
 .search-results-item:last-child {
   border: none;
 }
-
-.search-results-item:first-child {
-  border-top: 1px solid #bdb7b7;
-}
-
 
 //********************* SEARCH ICONS  *********************
 
