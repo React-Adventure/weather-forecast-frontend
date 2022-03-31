@@ -67,58 +67,60 @@ h1 {
   font-family: 'Quicksand';
   font-weight: 300;
   font-size: 18px;
-  color: #000000;
   -webkit-appearance: none;
-}
 
-#search::placeholder {
-  color: $theme-color;
-}
+  &, 
+  &::placeholder {
+    color: $theme-color;
+  }
 
-#search,
-#search:focus {
-  border-bottom: none !important;
-  box-shadow: none!important;
+  &, 
+  &:focus {
+    border-bottom: none !important;
+    box-shadow: none!important;
+  }
 }
 
 //********************* SEARCH RESULTS UL *********************
 
-.search-results-wrap {
-  display: none;
-  flex-direction: column;
-  align-items: flex-start;
-  align-self: flex-start;
+.search-results {
+  &-wrap {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-start;
 
-  width: 100%;
-  max-height: 350px;
-  margin: 0;
-  padding-top: 0 !important;
+    width: 100%;
+    max-height: 350px;
+    margin: 0;
+    padding-top: 0 !important;
 
-  border-bottom: 1px solid #bdb7b7;
-  border-top: 1px solid #bdb7b7;
+    border-top: 1px solid $theme-lighter-color;
 
-  overflow: auto;
+    overflow: auto;
+  }
+
+  &-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  
+    padding: 15px;
+  
+    color: $theme-color;
+    background-color: #FEE8EE;
+    border-bottom: 1px solid $theme-lighter-color;
+    cursor: pointer;
+
+    &:last-child {
+      border: none;
+    }
+  }
 }
 
 .active {
   display: flex;
-}
-
-.search-results-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  padding: 15px;
-
-  background-color: #FEE8EE;
-  border-bottom: 1px solid #bdb7b7;
-  cursor: pointer;
-}
-
-.search-results-item:last-child {
-  border: none;
 }
 
 //********************* SEARCH ICONS  *********************
@@ -146,23 +148,19 @@ h1 {
 
   color: #fff; 
   border: none;
+  box-shadow: 0 1px 0 $theme-color;
   font-size: large;
 
   cursor: pointer;
-}
 
-.search-btn,
-.search-btn:focus {
-  background-color: $theme-color;
-}
+  &, &:focus {
+    background-color: $theme-color;
+  }
 
-.search-btn:active {
-  background-color: #9b779a !important;
-}
-
-
-.search-btn {
-  box-shadow: 0 1px 0 $theme-color;
+  &:active {
+    background-color: #9b779a !important;
+    box-shadow: 0 1px 0 #9b779a;
+  }
 }
 
 .search-input-wrap {
