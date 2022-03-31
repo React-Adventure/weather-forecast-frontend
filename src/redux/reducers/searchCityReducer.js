@@ -22,7 +22,7 @@ export const searchCityReducer = (state = initialState, action) => {
       return {
         ...state,
         loader: false,
-        cities: action.payload || []
+        cities: action.payload.cities || []
       };
     case FETCH_SEARCH_CITY_FAIL:
       return {

@@ -44,27 +44,28 @@ const Home = (props) => {
   }
 
   const searchedCities = (citySearch) => {
-    if(!citySearch) {
+    if(!citySearch || !citySearch.trim()) {
       return;
     }
 
-    const mathcedCities = cities.filter(city => city.name.toUpperCase().startsWith(citySearch.toUpperCase()))
-    .map(city => {
-      return (
-        <li 
-        key={city.country + city.name}
-          className="search-results-item" 
-          onClick={handleClickedCity}
-        >
-          <FontAwesomeIcon
-          className="location-dot-icon"
-            icon={faLocationDot} 
-            size="2x"
-          /> 
-          <span className="city-name">{city.name}</span>
-        </li>
-      );
-    });
+    const mathcedCities = cities.filter(city => city.name.toUpperCase()
+      .startsWith(citySearch.trim().toUpperCase()))
+      .map(city => {
+        return (
+          <li 
+          key={city.country + city.name + city.lat + city.lon}
+            className="search-results-item" 
+            onClick={handleClickedCity}
+          >
+            <FontAwesomeIcon
+            className="location-dot-icon"
+              icon={faLocationDot} 
+              size="2x"
+            /> 
+            <span className="city-name">{city.name + ', ' + city.country + (city.state ? ', ' + city.state : '')}</span>
+          </li>
+        );
+      });
     
     return (
       <ul className="search-results-wrap active">
@@ -104,7 +105,7 @@ const Home = (props) => {
             />       
             <input 
               type="text" 
-              placeholder="Type anything..." 
+              placeholder="Enter city name" 
               id="search" 
               autoComplete="off"
               value={citySearch}
