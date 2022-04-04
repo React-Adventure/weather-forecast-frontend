@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
  
-const CitiesList = ({ matchedCities, handleClickedCity }) => {
-  debugger
+const CitiesList = ({ matchedCities, handleClickedCity }) => {  
   return (
     <List
       height={300}
