@@ -1,0 +1,80 @@
+@import './variables.scss';
+
+.weather {
+  &-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 80%;
+    margin: 20px 0;
+  }
+
+  &-card,
+  &-wrap {
+    border-radius: 10px;
+    color: $theme-color;
+  }
+  
+  &-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 250px;
+    width: 270px;
+    padding: 10px 0;
+
+    background: $cards-bg !important;   
+    
+    &-opts {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  &-icon {
+    height: 200px;
+    background: transparent !important;
+  }
+
+  &-measure-toggler {
+    margin-top: 10px;
+  
+    & label {
+      color: $theme-color !important;
+      font-size: 1em;
+    }
+  }
+}
+
+
+
+/*----------------- Materialaze CSS modified styles --------------------*/
+.switch label input[type=checkbox]:checked + .lever:after {
+  background-color: $theme-color;
+}
+
+.switch label input[type=checkbox]:checked + .lever {
+  background-color: rgba(0, 0, 0, 0.38);
+}
+
+.switch label .lever:after {
+  background-color: $theme-color;
+}
+
+.row {
+  margin-top: 20px;
+}
+
+.card-content {
+  padding: 0 !important;
+  width: 80%;
+}
+
+.card .card-title {
+  font-weight: 600;
+}

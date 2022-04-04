@@ -1,14 +1,31 @@
-
 @media screen and (max-width: 500px) {
-  .search-wrap {
-    flex-wrap: wrap;
+  .search {
+    &-wrap {
+      flex-wrap: wrap;
+    }
+
+    &-line-wrap {
+      width: 100% !important;
+    }
+
+    &-btn {
+      margin-top: 20px;
+    }
   }
 
-  .search-line-wrap {
-    width: 100% !important;
-  }
+}
 
-  .search-btn {
-    margin-top: 20px;
+@media screen and (max-width: 1200px) {
+  .weather-icon  {
+    flex: 0 1 100%;
+    order: -1;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .weather {
+    &-wrap {
+      width: 100%;
+    }
   }
 }
