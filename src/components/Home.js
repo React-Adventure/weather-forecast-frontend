@@ -1,12 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLocationDot, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySearch';
-import _ from 'lodash';
+import { fetchCurrentWeather } from '../redux/actions/currentWeater';
+import Weather from './Weather';
+import CitiesList from './CitiesList';
 
 const Home = (props) => {
-  const { fetchSearchCities, cities, cleanSearchResults, loader } = props;
+  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI } = props;
+  const { weather, fetchCurrentWeather, weatherLoader } = props;
+
   const [citySearch, setCitySearch] = useState('');
   const [cityTipsActive, setCityTipsActive] = useState(true);
 
@@ -48,33 +53,21 @@ const Home = (props) => {
       return;
     }
 
-    const mathcedCities = cities.filter(city => city.name.toUpperCase()
-      .startsWith(citySearch.trim().toUpperCase()))
-      .map(city => {
-        return (
-          <li 
-          key={city.country + city.name + city.lat + city.lon}
-            className="search-results-item" 
-            onClick={handleClickedCity}
-          >
-            <FontAwesomeIcon
-            className="location-dot-icon"
-              icon={faLocationDot} 
-              size="2x"
-            /> 
-            <span className="city-name">{city.name + ', ' + city.country + (city.state ? ', ' + city.state : '')}</span>
-          </li>
-        );
-      });
+    const matchedCities = cities.filter(city => city.name.toUpperCase()
+      .startsWith(citySearch.trim().toUpperCase()));
     
     return (
       <ul className="search-results-wrap active">
-        { mathcedCities.length !== 0 ? mathcedCities : 
+        { matchedCities.length !== 0 ? 
+          <CitiesList 
+            matchedCities={matchedCities} 
+            handleClickedCity={handleClickedCity} 
+          /> : 
           <li 
             key={'123'}
             className="search-results-item justify-content-center" 
           >
-            {loader ? 
+            {citiesLoader ? 
               <FontAwesomeIcon
                 className="fa-pulse spinner-icon"
                 icon={faSpinner} 
@@ -89,12 +82,27 @@ const Home = (props) => {
   };
  
   const searchBtnHandler = () => {
-    console.log('Btn clicked!');
+    const chosenCityName = citySearch;
+    const cityName = chosenCityName.split(',')[0].trim();
+    
+    const chosenCity = cities.find((el => el.name.toUpperCase() === cityName.toUpperCase()));
+    
+    if(chosenCity) {
+      fetchCurrentWeather(chosenCity);
+      setCityTipsActive(false);
+    }
   };
+
+  const handleEnterPress = (event) => {
+    if(event.key === 'Enter') {
+      updateCitySearch(event);
+      searchBtnHandler();
+    }
+  }
 
   return (
     <div className='wrap'>
-      <h1>Weather Forecast App</h1>
+      <h1>Weather Forecast</h1>
       <div className="search-wrap"> 
         <div className="search-line-wrap">
           <div className="search-input-wrap"> 
@@ -110,6 +118,7 @@ const Home = (props) => {
               autoComplete="off"
               value={citySearch}
               onChange={updateCitySearch}
+              onKeyPress={handleEnterPress}
             />
           </div>
             
@@ -117,7 +126,17 @@ const Home = (props) => {
         </div>       
           
             <button className="search-btn" onClick={searchBtnHandler}>Search</button>
-        </div>
+      </div>
+      <div className="weather-wrap">
+        {weatherLoader && 
+          <FontAwesomeIcon
+            className="fa-pulse spinner-icon"
+            icon={faSpinner} 
+            size="5x"
+          />
+        }
+        {weather.length !== 0 && <Weather></Weather>}
+      </div>
     </div>
   );
 };
@@ -125,13 +144,17 @@ const Home = (props) => {
 const mapStateToProps = state => {
   return {
     cities: state.citiesData.cities,
-    loader : state.citiesData.loader
+    citiesLoader : state.citiesData.loader,
+    citiesAPI : state.citiesData.citiesAPI,
+    weather: state.weatherData.weather,
+    weatherLoader: state.weatherData.weatherLoader
   };
 };
 
 const mapDispatchToProps = { 
   fetchSearchCities,
-  cleanSearchResults
+  cleanSearchResults,
+  fetchCurrentWeather
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

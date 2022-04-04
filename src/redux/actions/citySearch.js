@@ -7,13 +7,7 @@ import {
 import cities from 'cities.json';
 import { citySearchURL } from '../api.js';
 
-let Cities = [];
-
-for(let i = 0; i < 100; i++) {
-  Cities.push(cities[i]);
-}
-
-const addSearchParams = (value) => {
+export const addSearchParams = (value) => {
   if(!value) {
       return '';
   }
@@ -29,12 +23,12 @@ export const fetchSearchCities = (search) => {
       if(!city) {
         return;
       }
-      
+
       dispatch({
         type: FETCH_SEARCH_CITY_LOADING
       });
 
-      const json_mocked = Cities.sort((curr, next) => (curr.name > next.name) ? 1 : ((next.name > curr.name) ? -1 : 0));
+      const json_mocked = cities.sort((curr, next) => (curr.name > next.name) ? 1 : ((next.name > curr.name) ? -1 : 0));
       
       const url = citySearchURL(city);
 
@@ -43,7 +37,7 @@ export const fetchSearchCities = (search) => {
 
       dispatch({
         type: FETCH_SEARCH_CITY_SUCCESS,
-        payload: { cities: json, cities_mocked: json_mocked }
+        payload: { cities: json_mocked, citiesAPI: json }
       });
 
     } catch(err) {
