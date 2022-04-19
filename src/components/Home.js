@@ -125,7 +125,7 @@ const Home = (props) => {
             {cityTipsActive && searchedCities(citySearch)}
         </div>       
           
-            <button className="search-btn" onClick={searchBtnHandler}>Search</button>
+          <button className="search-btn" onClick={searchBtnHandler}>Show weather</button>
       </div>
       <div className="weather-wrap">
         {weatherLoader && 
