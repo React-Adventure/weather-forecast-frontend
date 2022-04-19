@@ -14,28 +14,28 @@ const ForecastCard = (props) => {
             <p className="weather-card-opts">
               <span>Tempetature:</span>
               <span>
-                {data?.main?.temp}&#xb0;
+                {Math.round(data?.main?.temp)}&#xb0;
                 <span className="weather-card-measure">C</span>
               </span>
             </p>,
             <p className="weather-card-opts">
               <span>Feels like:</span>
               <span>
-                {data?.main?.feels_like}&#xb0;
+                {Math.round(data?.main?.feels_like)}&#xb0;
                 <span className="weather-card-measure">C</span>
               </span>
             </p>,
             <p className="weather-card-opts">
               <span>Min temperature:</span>
               <span>
-                {data?.main?.temp_min}&#xb0;
+                {Math.round(data?.main?.temp_min)}&#xb0;
                 <span className="weather-card-measure">C</span>
               </span>
             </p>,
             <p className="weather-card-opts">
               <span>Max temperature:</span>
               <span>
-                {data?.main?.temp_max}&#xb0;
+                {Math.round(data?.main?.temp_max)}&#xb0;
                 <span className="weather-card-measure">C</span>
               </span>
             </p>
