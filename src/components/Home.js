@@ -24,13 +24,13 @@ const Home = (props) => {
 
   const debounceSearch = useCallback(
     _.debounce(citySearch => {
-        if(citySearch && cityTipsActive) {
+        if(citySearch) {
           fetchSearchCities(citySearch);
         } else {
           cleanSearchResults();
         }
     }), 
-  [citySearch, cityTipsActive]);
+  [citySearch]);
 
   const updateCitySearch = (event) => {
     setCityTipsActive(true);

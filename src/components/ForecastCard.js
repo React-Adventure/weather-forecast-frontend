@@ -13,7 +13,7 @@ const ForecastCard = (props) => {
       case CARD_TYPE.temperature: {
         return { ...title,
           opts: [
-            <p className="weather-card-opts">
+            <p className="weather-card-opts justify-content-center">
               <span className="weather-card-temperature">
                 {Math.round(data?.main?.temp)}&#xb0;
                 <span className="weather-card-measure">C</span>
