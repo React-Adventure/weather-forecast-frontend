@@ -42,6 +42,7 @@ const Home = (props) => {
 
   const handleClickedCity = (event) => {
     const cityNameElement = event.currentTarget.getElementsByClassName('city-name')[0];
+    
     setCitySearch(cityNameElement.innerText);
     
     event.currentTarget.parentNode.classList.remove('active');
@@ -103,6 +104,7 @@ const Home = (props) => {
   return (
     <div className='wrap'>
       <h1>Weather Forecast</h1>
+      <div className="weather-wrapper">
       <div className="search-wrap"> 
         <div className="search-line-wrap">
           <div className="search-input-wrap"> 
@@ -127,7 +129,7 @@ const Home = (props) => {
           
           <button className="search-btn" onClick={searchBtnHandler}>Show weather</button>
       </div>
-      <div className="weather-wrap">
+      <div className="weather-cards-wrap">
         {weatherLoader && 
           <FontAwesomeIcon
             className="fa-pulse spinner-icon"
@@ -137,6 +139,8 @@ const Home = (props) => {
         }
         {weather.length !== 0 && <Weather></Weather>}
       </div>
+      </div>
+      
     </div>
   );
 };

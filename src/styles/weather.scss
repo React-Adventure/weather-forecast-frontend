@@ -1,19 +1,32 @@
 @import './variables.scss';
 
+.weather-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  position: relative;
+}
+
 .weather {
-  &-wrap {
+  &-cards-wrap {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 
+    position: relative;
+    z-index: 1;
+
     width: 80%;
     margin: 20px 0;
   }
 
   &-card,
-  &-wrap {
+  &-cards-wrap {
     border-radius: 10px;
     color: $theme-color;
   }
@@ -52,7 +65,11 @@
   }
 
   &-icon {
+    flex: 0 1 100%;
+    order: -1;
+
     height: 200px;
+
     background: transparent !important;
   }
 

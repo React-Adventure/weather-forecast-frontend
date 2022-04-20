@@ -9,18 +9,27 @@
     }
 
     &-btn {
-      margin-top: 20px;
+      margin-bottom: 20px;
+      order: -1;
     }
   }
 
-}
-
-@media screen and (max-width: 1200px) {
-  .weather-icon  {
-    flex: 0 1 100%;
-    order: -1;
+  .weather {
+    &-cards-wrap {
+      top: 160px;
+    }
   }
 }
+
+@media screen and (min-width: 500px) {
+
+  .weather {
+    &-cards-wrap {
+      top: 74px;
+    }
+  }
+}
+
 
 @media screen and (max-width: 1000px) {
   .weather {
