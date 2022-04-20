@@ -14,7 +14,7 @@ const Weather = (props) => {
 
   return (
     <>
-      <ForecastCard cardType={CARD_TYPE.weather}></ForecastCard>
+      <ForecastCard cardType={CARD_TYPE.temperature}></ForecastCard>
       {src ? 
         <div className=" row weather-card weather-icon">
           <h5 className="f-w-600" style={{margin: 0}}>{weather.name}</h5>
@@ -23,6 +23,7 @@ const Weather = (props) => {
         </div> 
       : <></> }
       <ForecastCard cardType={CARD_TYPE.wind}></ForecastCard>
+      <ForecastCard cardType={CARD_TYPE.extra}></ForecastCard>
     </>
   );
 };

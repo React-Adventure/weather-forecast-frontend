@@ -1,8 +1,8 @@
 
 export const CARD_TYPE = {
-  weather: 'Weather',
+  temperature: 'Temperature',
   wind: 'Wind',
-  other: 'Other'
+  extra: 'Extra Options'
 };
 
 export const METRIC_SYSTEM = {

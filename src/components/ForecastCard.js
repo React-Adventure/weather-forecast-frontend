@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { CARD_TYPE } from './consts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
 
 const ForecastCard = (props) => {
   const { weather, cardType } = props;
@@ -8,12 +10,11 @@ const ForecastCard = (props) => {
   const cardProps = useCallback((type, data) => {
     const title = { title: cardType };
     switch (type) {
-      case CARD_TYPE.weather: {
+      case CARD_TYPE.temperature: {
         return { ...title,
           opts: [
             <p className="weather-card-opts">
-              <span>Tempetature:</span>
-              <span>
+              <span className="weather-card-temperature">
                 {Math.round(data?.main?.temp)}&#xb0;
                 <span className="weather-card-measure">C</span>
               </span>
@@ -24,20 +25,6 @@ const ForecastCard = (props) => {
                 {Math.round(data?.main?.feels_like)}&#xb0;
                 <span className="weather-card-measure">C</span>
               </span>
-            </p>,
-            <p className="weather-card-opts">
-              <span>Min temperature:</span>
-              <span>
-                {Math.round(data?.main?.temp_min)}&#xb0;
-                <span className="weather-card-measure">C</span>
-              </span>
-            </p>,
-            <p className="weather-card-opts">
-              <span>Max temperature:</span>
-              <span>
-                {Math.round(data?.main?.temp_max)}&#xb0;
-                <span className="weather-card-measure">C</span>
-              </span>
             </p>
           ]
         };
@@ -45,6 +32,14 @@ const ForecastCard = (props) => {
       case CARD_TYPE.wind:
         return { ...title,
           opts: [
+            <p className="weather-card-opts justify-content-center">
+              <FontAwesomeIcon
+                className="wind-direction fa-rotate-by"
+                icon={faArrowUpLong} 
+                style={{"--fa-rotate-angle": `${data?.wind?.deg}deg`}}
+                size="3x"
+              />
+            </p>,
             <p className="weather-card-opts">
               <span>Speed:</span>
               <span>
@@ -53,25 +48,23 @@ const ForecastCard = (props) => {
               </span>
             </p>,
             <p className="weather-card-opts">
-              <span>Direction:</span>
-              <span>
-                {data?.wind?.deg}
-                <span className="weather-card-measure">&#xb0;</span>
-              </span>
-            </p>,
-            <p className="weather-card-opts">
               <span>Gust:</span>
               <span>
-                {data?.wind?.gust}
+                { weather?.wind?.gust || '-' }
                 <span className="weather-card-measure">meter/sec</span>
               </span>
-            </p>,
+            </p>
+          ]
+        };
+      case CARD_TYPE.extra:
+        return { ...title,
+          opts: [
             <p className="weather-card-opts">
-              <span>Pressure:</span>
-              <span>
-                {data?.main?.pressure}
-                <span className="weather-card-measure">hPa</span>
-              </span>
+                <span>Pressure:</span>
+                <span>
+                  {data?.main?.pressure}
+                  <span className="weather-card-measure">hPa</span>
+                </span>
             </p>,
             <p className="weather-card-opts">
               <span>Humidity:</span>
@@ -90,7 +83,7 @@ const ForecastCard = (props) => {
             <p className="weather-card-opts">
               <span>Precipitation:</span>
               <span>
-                {data?.rain?.['3h'] || data?.snow?.['3h'] || '- '}
+                {data?.rain?.['3h'] || data?.snow?.['3h'] || '-'}
                 <span className="weather-card-measure">mm</span>
               </span>
             </p>
@@ -111,7 +104,9 @@ const ForecastCard = (props) => {
     <div className="row">
       <div className="col s12">
         <div className="card weather-card">
-            <span className="card-title center">{cardOptions.title}</span>
+            {cardOptions.title !== CARD_TYPE.temperature && 
+              <span className="card-title center">{cardOptions.title}</span>
+            }
           <div className="card-content">
             {cardOptions.opts.map(info => info)}
           </div>

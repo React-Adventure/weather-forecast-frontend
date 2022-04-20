@@ -25,14 +25,29 @@
     align-items: center;
     height: 250px;
     width: 270px;
-    padding: 10px 0;
+    padding: 20px 0;
 
     background: $cards-bg !important;   
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+    }
     
     &-opts {
       display: flex;
       justify-content: space-between;
       width: 100%;
+      margin: 0;
+    }
+
+    &-temperature {
+      font-size: 100px;
+    }
+
+    &-measure {
+      margin-left: 5px;
     }
   }
 
@@ -51,6 +66,9 @@
   }
 }
 
+.wind-direction {
+  margin-bottom: 10px;
+}
 
 
 /*----------------- Materialaze CSS modified styles --------------------*/
@@ -73,6 +91,10 @@
 .card-content {
   padding: 0 !important;
   width: 80%;
+}
+
+.card-title {
+  margin: 0;
 }
 
 .card .card-title {
