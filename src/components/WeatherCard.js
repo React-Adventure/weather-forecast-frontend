@@ -4,7 +4,7 @@ import { CARD_TYPE } from './consts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
 
-const ForecastCard = (props) => {
+const WeatherCard = (props) => {
   const { weather, cardType } = props;
 
   const cardProps = useCallback((type, data) => {
@@ -130,4 +130,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ForecastCard);
+export default connect(mapStateToProps)(WeatherCard);

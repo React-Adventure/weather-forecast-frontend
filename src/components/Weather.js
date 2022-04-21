@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CARD_TYPE } from './consts';
-import ForecastCard from './ForecastCard';
+import WeatherCard from './WeatherCard';
 const Weather = (props) => {
   const { weather } = props;
 
@@ -14,7 +14,7 @@ const Weather = (props) => {
 
   return (
     <>
-      <ForecastCard cardType={CARD_TYPE.temperature}></ForecastCard>
+      <WeatherCard cardType={CARD_TYPE.temperature}></WeatherCard>
       {src ? 
         <div className=" row weather-card weather-icon">
           <h5 className="f-w-600" style={{margin: 0}}>{weather.name}</h5>
@@ -22,8 +22,8 @@ const Weather = (props) => {
           <span className="f-w-600">{descr}</span>
         </div> 
       : <></> }
-      <ForecastCard cardType={CARD_TYPE.wind}></ForecastCard>
-      <ForecastCard cardType={CARD_TYPE.extra}></ForecastCard>
+      <WeatherCard cardType={CARD_TYPE.wind}></WeatherCard>
+      <WeatherCard cardType={CARD_TYPE.extra}></WeatherCard>
     </>
   );
 };
