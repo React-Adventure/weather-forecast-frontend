@@ -7,6 +7,13 @@ import { faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
 const WeatherCard = (props) => {
   const { weather, cardType } = props;
 
+  let src = '';
+  let descr = '';
+  if (weather.length !== 0 && cardType === CARD_TYPE.icon) {
+    src = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
+    descr = weather.weather[0].description.toUpperCase();
+  }
+
   const cardProps = useCallback((type, data) => {
     const title = { title: cardType };
     switch (type) {
@@ -101,6 +108,13 @@ const WeatherCard = (props) => {
   }, [cardType, weather, cardProps]);
       
   return (
+    cardType === CARD_TYPE.icon ? 
+      <div className=" row weather-card weather-icon">
+        <h5 className="f-w-600" style={{margin: 0}}>{weather.name}</h5>
+        <img src={src}></img>
+        <span className="f-w-600">{descr}</span>
+      </div> 
+    :
     <div className="row">
       <div className="col s12">
         <div className="card weather-card">
@@ -109,14 +123,6 @@ const WeatherCard = (props) => {
             }
           <div className="card-content">
             {cardOptions.opts.map(info => info)}
-          </div>
-          <div className="switch center weather-measure-toggler">
-            <label>
-              Metric
-              <input type="checkbox" />
-              <span className="lever"></span>
-              Standart
-            </label>
           </div>
         </div>
       </div>

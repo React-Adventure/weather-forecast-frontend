@@ -16,11 +16,12 @@ const cityCheck = (city) => {
   );
 };
 
-export const fetchCurrentWeather = (city) => {
+export const fetchCurrentWeather = (city, units = 'metric') => {
   const isCity = cityCheck(city);
   
   return async dispatch => {
     try {
+      debugger
       if(!isCity) {
         return;
       }
@@ -29,7 +30,7 @@ export const fetchCurrentWeather = (city) => {
         type: FETCH_WEATHER_LOADING
       });
       
-      const url = weatherURL(city);
+      const url = weatherURL(city, units);
 
       const res = await fetch(url);
       const json = await res.json();
