@@ -1,37 +1,42 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import { fetchCurrentWeather } from '../redux/actions/currentWeater';
 import { CARD_TYPE } from './consts';
 import WeatherCard from './WeatherCard';
 const Weather = (props) => {
-  const { weather } = props;
+  const { fetchCurrentWeather, cityAndParams } = props;
 
-  let src = '';
-  let descr = '';
-  if (weather.length !== 0) {
-    src = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
-    descr = weather.weather[0].description.toUpperCase();
+  const toggleMeasure = (event) => {
+    console.log('CLICK:', event.target.checked);
+
+    if (event.target.checked) {
+      fetchCurrentWeather(cityAndParams,'imperial');
+    } else {
+      fetchCurrentWeather(cityAndParams);
+    }
   }
 
   return (
     <>
-      <WeatherCard cardType={CARD_TYPE.temperature}></WeatherCard>
-      {src ? 
-        <div className=" row weather-card weather-icon">
-          <h5 className="f-w-600" style={{margin: 0}}>{weather.name}</h5>
-          <img src={src}></img>
-          <span className="f-w-600">{descr}</span>
-        </div> 
-      : <></> }
-      <WeatherCard cardType={CARD_TYPE.wind}></WeatherCard>
-      <WeatherCard cardType={CARD_TYPE.extra}></WeatherCard>
+      <div className="row switch center weather-measure-toggler">
+        <label>
+          Metric
+          <input type="checkbox" onClick={toggleMeasure} />
+          <span className="lever"></span>
+          Imperial
+        </label>
+      </div>
+      <WeatherCard key={CARD_TYPE.icon} cardType={CARD_TYPE.icon}></WeatherCard>
+      <WeatherCard key={CARD_TYPE.temperature} cardType={CARD_TYPE.temperature}></WeatherCard>
+      <WeatherCard key={CARD_TYPE.wind} cardType={CARD_TYPE.wind}></WeatherCard>
+      <WeatherCard key={CARD_TYPE.extra} cardType={CARD_TYPE.extra}></WeatherCard>
     </>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    weather: state.weatherData.weather
-  }
-}
 
-export default connect(mapStateToProps)(Weather);
+const mapDispatchToProps = { 
+  fetchCurrentWeather
+};
+
+export default connect(null, mapDispatchToProps)(Weather);

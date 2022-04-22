@@ -15,6 +15,8 @@ const Home = (props) => {
   const [citySearch, setCitySearch] = useState('');
   const [cityTipsActive, setCityTipsActive] = useState(true);
 
+  const [cityAndParams, setCityAndParams] = useState({});
+
   useEffect(() => {
     return () => {
         cleanSearchResults();
@@ -89,6 +91,10 @@ const Home = (props) => {
     const chosenCity = cities.find((el => el.name.toUpperCase() === cityName.toUpperCase()));
     
     if(chosenCity) {
+      if(chosenCity !== cityAndParams) {
+        setCityAndParams(chosenCity);
+      }
+
       fetchCurrentWeather(chosenCity);
       setCityTipsActive(false);
     }
@@ -137,7 +143,7 @@ const Home = (props) => {
             size="5x"
           />
         }
-        {weather.length !== 0 && <Weather></Weather>}
+        {weather.length !== 0 && <Weather cityAndParams={cityAndParams}></Weather>}
       </div>
       </div>
       

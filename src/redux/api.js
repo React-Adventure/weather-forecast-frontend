@@ -15,7 +15,7 @@ export const citySearchURL = (cityName) => {
   return url;
 };
 
-export const weatherURL = (city) => {
-  const url = `${WEATHER_BASE_URL}${WEATHER}lat=${city.lat}&lon=${city.lng}&appid=${API_KEY}&units=metric`;
+export const weatherURL = (city, units) => {
+  const url = `${WEATHER_BASE_URL}${WEATHER}lat=${city.lat}&lon=${city.lng}&appid=${API_KEY}&units=${units}`;
   return url;
 };
