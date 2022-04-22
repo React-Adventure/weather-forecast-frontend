@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CARD_TYPE } from './consts';
+import ForecastCard from './ForecastCard';
 import WeatherCard from './WeatherCard';
 const Weather = (props) => {
   const { weather } = props;
@@ -24,6 +25,8 @@ const Weather = (props) => {
       : <></> }
       <WeatherCard cardType={CARD_TYPE.wind}></WeatherCard>
       <WeatherCard cardType={CARD_TYPE.extra}></WeatherCard>
+      {}
+      <ForecastCard></ForecastCard>
     </>
   );
 };

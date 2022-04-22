@@ -8,6 +8,7 @@ const LIMIT = 30;
 //************* WEATHER SEARCH ******************
 const WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5';
 const WEATHER ='/weather?';
+const CURRENT_AND_FORECAST ='/onecall?';
 
 
 export const citySearchURL = (cityName) => {
@@ -17,5 +18,11 @@ export const citySearchURL = (cityName) => {
 
 export const weatherURL = (city) => {
   const url = `${WEATHER_BASE_URL}${WEATHER}lat=${city.lat}&lon=${city.lng}&appid=${API_KEY}&units=metric`;
+  return url;
+};
+
+export const forecastURL = (city/*, units = 'metric', part*/) => {
+  const url = `${WEATHER_BASE_URL}${CURRENT_AND_FORECAST}lat=${city.lat}&lon=${city.lng}&exclude={minutely,hourly,alerts}&appid=${API_KEY}&units={metric}}`;
+
   return url;
 };
