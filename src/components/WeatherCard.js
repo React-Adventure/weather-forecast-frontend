@@ -1,11 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
-import { CARD_TYPE } from './consts';
+import { CARD_TYPE, MEASUREMENT, MEASUREMENT_SYSTEM } from './consts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
+import MeasurementSystemContext from './context/MeasurementSystemContext';
 
 const WeatherCard = (props) => {
   const { weather, cardType } = props;
+  const { measureSystem } = useContext(MeasurementSystemContext);
 
   let src = '';
   let descr = '';
@@ -23,14 +25,14 @@ const WeatherCard = (props) => {
             <p className="weather-card-opts justify-content-center">
               <span className="weather-card-temperature">
                 {Math.round(data?.main?.temp)}&#xb0;
-                <span className="weather-card-measure">C</span>
+                <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.temp : MEASUREMENT.metric.temp}</span>
               </span>
             </p>,
             <p className="weather-card-opts">
               <span>Feels like:</span>
               <span>
                 {Math.round(data?.main?.feels_like)}&#xb0;
-                <span className="weather-card-measure">C</span>
+                <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.temp : MEASUREMENT.metric.temp}</span>
               </span>
             </p>
           ]
@@ -51,14 +53,14 @@ const WeatherCard = (props) => {
               <span>Speed:</span>
               <span>
                 {data?.wind?.speed}
-                <span className="weather-card-measure">meter/sec</span>
+                <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.windSpeed : MEASUREMENT.metric.windSpeed}</span>
               </span>
             </p>,
             <p className="weather-card-opts">
               <span>Gust:</span>
               <span>
                 { weather?.wind?.gust || '-' }
-                <span className="weather-card-measure">meter/sec</span>
+                <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.windGust : MEASUREMENT.metric.windGust}</span>
               </span>
             </p>
           ]

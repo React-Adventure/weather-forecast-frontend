@@ -20,8 +20,7 @@ export const fetchCurrentWeather = (city, units = 'metric') => {
   const isCity = cityCheck(city);
   
   return async dispatch => {
-    try {
-      debugger
+    try {      
       if(!isCity) {
         return;
       }
@@ -34,7 +33,6 @@ export const fetchCurrentWeather = (city, units = 'metric') => {
 
       const res = await fetch(url);
       const json = await res.json();
-      console.log(json);
 
       dispatch({
         type: FETCH_WEATHER_SUCCESS,

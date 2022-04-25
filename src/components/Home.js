@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,8 @@ import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySear
 import { fetchCurrentWeather } from '../redux/actions/currentWeater';
 import Weather from './Weather';
 import CitiesList from './CitiesList';
+import { MEASUREMENT_SYSTEM } from './consts';
+import MeasurementSystemContext from './context/MeasurementSystemContext';
 
 const Home = (props) => {
   const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI } = props;
@@ -16,6 +18,15 @@ const Home = (props) => {
   const [cityTipsActive, setCityTipsActive] = useState(true);
 
   const [cityAndParams, setCityAndParams] = useState({});
+  const [measureTogglerChecked, setMeasureTogglerChecked] = useState(() => {
+    const togglerChecked = localStorage.getItem('toggler');
+
+    return (togglerChecked !== undefined && togglerChecked !== null) ? JSON.parse(togglerChecked) : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("toggler", JSON.stringify(measureTogglerChecked));
+  }, [measureTogglerChecked]);
 
   useEffect(() => {
     return () => {
@@ -95,7 +106,7 @@ const Home = (props) => {
         setCityAndParams(chosenCity);
       }
 
-      fetchCurrentWeather(chosenCity);
+      fetchWeatherWithMetric(chosenCity, measureTogglerChecked);
       setCityTipsActive(false);
     }
   };
@@ -108,14 +119,18 @@ const Home = (props) => {
   };
 
   const toggleMeasure = (event) => {
-    console.log('CLICK:', event.target.checked);
+    setMeasureTogglerChecked(!measureTogglerChecked);
 
-    if (event.target.checked) {
-      fetchCurrentWeather(cityAndParams,'imperial');
-    } else {
-      fetchCurrentWeather(cityAndParams);
-    }
+    fetchWeatherWithMetric(cityAndParams, event.target.checked);
   };
+
+  const fetchWeatherWithMetric = (city, metric) => {
+    if (metric) {
+      fetchCurrentWeather(city, MEASUREMENT_SYSTEM.imperial);
+    } else {
+      fetchCurrentWeather(city, MEASUREMENT_SYSTEM.metric);
+    }
+  }
 
   return (
     <div className='wrap'>
@@ -149,7 +164,7 @@ const Home = (props) => {
       <div className="row switch center weather-measure-toggler">
         <label>
           Metric
-          <input type="checkbox" onClick={toggleMeasure} />
+          <input type="checkbox" onChange={toggleMeasure} checked={measureTogglerChecked} />
           <span className="lever"></span>
           Imperial
         </label>
@@ -163,7 +178,11 @@ const Home = (props) => {
             size="5x"
           />
         }
-        {weather.length !== 0 && <Weather cityAndParams={cityAndParams}></Weather>}
+        <MeasurementSystemContext.Provider 
+          value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
+        >
+          {weather.length !== 0 && <Weather />}
+        </MeasurementSystemContext.Provider>
       </div>
       </div>
       
