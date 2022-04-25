@@ -105,7 +105,17 @@ const Home = (props) => {
       updateCitySearch(event);
       searchBtnHandler();
     }
-  }
+  };
+
+  const toggleMeasure = (event) => {
+    console.log('CLICK:', event.target.checked);
+
+    if (event.target.checked) {
+      fetchCurrentWeather(cityAndParams,'imperial');
+    } else {
+      fetchCurrentWeather(cityAndParams);
+    }
+  };
 
   return (
     <div className='wrap'>
@@ -135,6 +145,16 @@ const Home = (props) => {
           
           <button className="search-btn" onClick={searchBtnHandler}>Show weather</button>
       </div>
+      
+      <div className="row switch center weather-measure-toggler">
+        <label>
+          Metric
+          <input type="checkbox" onClick={toggleMeasure} />
+          <span className="lever"></span>
+          Imperial
+        </label>
+      </div>
+
       <div className="weather-cards-wrap">
         {weatherLoader && 
           <FontAwesomeIcon

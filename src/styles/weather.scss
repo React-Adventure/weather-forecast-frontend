@@ -76,7 +76,8 @@
 
   &-measure-toggler {
     flex: 0 1 100%;
-    margin-top: 0 !important;
+
+    position: relative;
   
     & label {
       color: $theme-color !important;
