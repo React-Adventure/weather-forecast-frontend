@@ -21,8 +21,8 @@ export const weatherURL = (city, units) => {
   return url;
 };
 
-export const forecastURL = (city/*, units = 'metric', part*/) => {
-  const url = `${WEATHER_BASE_URL}${CURRENT_AND_FORECAST}lat=${city.lat}&lon=${city.lng}&exclude={minutely,hourly,alerts}&appid=${API_KEY}&units={metric}}`;
+export const currentAndForecastURL = (city, units = 'metric') => {
+  const url = `${WEATHER_BASE_URL}${CURRENT_AND_FORECAST}lat=${city.lat}&lon=${city.lng}&exclude={minutely,hourly,alerts}&appid=${API_KEY}&units=${units}`;
 
   return url;
 };

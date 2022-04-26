@@ -1,5 +1,5 @@
 import { date } from "joi";
-import { weatherURL } from "../api";
+import { weatherURL, currentAndForecastURL } from "../api";
 import { 
   FETCH_WEATHER_LOADING, 
   FETCH_WEATHER_SUCCESS, 
@@ -30,16 +30,16 @@ export const fetchCurrentWeather = (city, units = 'metric') => {
         type: FETCH_WEATHER_LOADING
       });
       
-      const url = weatherURL(city, units);
+      const url = currentAndForecastURL(city, units);
 
       const res = await fetch(url);
       const json = await res.json();
       console.log(json);
-      console.log(new Date(json.dt));
+      console.log((new Date(json.current.dt * 1000)).toDateString('en-US', {weekday: 'long'}));
 
       dispatch({
         type: FETCH_WEATHER_SUCCESS,
-        payload: { weather: json }
+        payload: { weather: json.current, dailyForecast: json.daily }
       });
 
     } catch(err) {

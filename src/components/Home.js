@@ -10,6 +10,7 @@ import CitiesList from './CitiesList';
 import { MEASUREMENT_SYSTEM } from './consts';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
 import Forecast from './Forecast';
+import CityContext from './context/CityContext';
 
 const Home = (props) => {
   const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI } = props;
@@ -182,7 +183,19 @@ const Home = (props) => {
         <MeasurementSystemContext.Provider 
           value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
         >
-          {weather.length !== 0 && <> <Weather /> <Forecast /> </>}
+          {weather.length !== 0 && 
+            <> 
+              <h4 className="today-weather-title">
+                {(new Date(weather.dt * 1000))
+                  .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+                }
+              </h4>
+              <CityContext.Provider value={{cityAndParams}}>
+                <Weather /> 
+              </CityContext.Provider>
+              <Forecast /> 
+            </>
+          }
         </MeasurementSystemContext.Provider>
       </div>
       </div>

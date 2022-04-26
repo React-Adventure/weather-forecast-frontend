@@ -1,15 +1,22 @@
 import React from 'react';
-import { CARD_TYPE } from './consts';
+import { connect } from 'react-redux';
 import ForecastCard from './ForecastCard';
 
-const Forecast = () => {
+const Forecast = (props) => {
+  const { dailyForecast } = props;
+
   return <div className="forecast-cards-wrap">
     <h4 className="weekly-forecast-title">Weekly Forecast</h4>
-    {Object.keys(CARD_TYPE).map((key) => {
-        return <ForecastCard key={CARD_TYPE[key]} cardType={CARD_TYPE[key]}></ForecastCard>
+    {dailyForecast.slice(0, 7).map((elem) => {
+        return <ForecastCard key={elem.dt} forecast={elem}></ForecastCard>
     })}
-    <ForecastCard />
   </div>
 };
 
-export default Forecast;
+const mapStateToProps = (state) => {
+  return {
+    dailyForecast: state.weatherData.dailyForecast
+  }
+};
+  
+export default connect(mapStateToProps)(Forecast);
