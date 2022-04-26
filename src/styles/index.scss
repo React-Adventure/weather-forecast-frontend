@@ -3,7 +3,6 @@
 @import './media.scss';
 @import './searchBar.scss';
 @import './weather.scss';
-@import './forecast';
 
 //********************* COMMON STYLES *********************
 
@@ -39,4 +38,17 @@ h1 {
 
 .f-w-600 {
   font-weight: 600;
+}
+
+.weather-forecast-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  z-index: 1;
+
+  width: 80%;
+  margin: 20px 0;
 }

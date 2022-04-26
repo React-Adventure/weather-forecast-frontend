@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
 import { CARD_TYPE, MEASUREMENT, MEASUREMENT_SYSTEM } from './consts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
 
 const WeatherCard = (props) => {
@@ -44,8 +44,8 @@ const WeatherCard = (props) => {
             <p className="weather-card-opts justify-content-center">
               <FontAwesomeIcon
                 className="wind-direction fa-rotate-by"
-                icon={faArrowUpLong} 
-                style={{"--fa-rotate-angle": `${data?.wind?.deg}deg`}}
+                icon={faArrowRightLong} 
+                style={{"--fa-rotate-angle": `-${data?.wind?.deg}deg`}}
                 size="3x"
               />
             </p>,

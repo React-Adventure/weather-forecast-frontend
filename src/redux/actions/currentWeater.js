@@ -1,3 +1,4 @@
+import { date } from "joi";
 import { weatherURL } from "../api";
 import { 
   FETCH_WEATHER_LOADING, 
@@ -33,6 +34,8 @@ export const fetchCurrentWeather = (city, units = 'metric') => {
 
       const res = await fetch(url);
       const json = await res.json();
+      console.log(json);
+      console.log(new Date(json.dt));
 
       dispatch({
         type: FETCH_WEATHER_SUCCESS,

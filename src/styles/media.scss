@@ -15,8 +15,8 @@
   }
 
   .weather {
-    &-cards-wrap {
-      top: 120px;
+    &-forecast-wrap {
+      top: 155px;
     }
 
     &-measure-toggler {
@@ -26,9 +26,8 @@
 }
 
 @media screen and (min-width: 500px) {
-
   .weather {
-    &-cards-wrap {
+    &-forecast-wrap {
       top: 54px;
     }
 
@@ -41,8 +40,8 @@
 
 @media screen and (max-width: 1000px) {
   .weather {
-    &-wrap {
-      width: 100%;
+    &-forecast-wrap {
+      width: 100% !important;
     }
   }
 }

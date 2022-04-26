@@ -9,6 +9,7 @@ import Weather from './Weather';
 import CitiesList from './CitiesList';
 import { MEASUREMENT_SYSTEM } from './consts';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
+import Forecast from './Forecast';
 
 const Home = (props) => {
   const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI } = props;
@@ -170,7 +171,7 @@ const Home = (props) => {
         </label>
       </div>
 
-      <div className="weather-cards-wrap">
+      <div className="weather-forecast-wrap">
         {weatherLoader && 
           <FontAwesomeIcon
             className="fa-pulse spinner-icon"
@@ -181,7 +182,7 @@ const Home = (props) => {
         <MeasurementSystemContext.Provider 
           value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
         >
-          {weather.length !== 0 && <Weather />}
+          {weather.length !== 0 && <> <Weather /> <Forecast /> </>}
         </MeasurementSystemContext.Provider>
       </div>
       </div>
