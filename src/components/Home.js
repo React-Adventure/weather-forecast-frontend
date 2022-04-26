@@ -30,6 +30,16 @@ const Home = (props) => {
     localStorage.setItem("toggler", JSON.stringify(measureTogglerChecked));
   }, [measureTogglerChecked]);
 
+  const [currentLocation, setCurrentLocation] = useState(() => {
+    const currentChecked = localStorage.getItem('currentLocation');
+
+    return (currentChecked !== undefined && currentChecked !== null) ? JSON.parse(currentChecked) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("currentLocation", JSON.stringify(currentLocation));
+  }, [currentLocation]);
+
   useEffect(() => {
     return () => {
         cleanSearchResults();
@@ -126,6 +136,11 @@ const Home = (props) => {
     fetchWeatherWithMetric(cityAndParams, event.target.checked);
   };
 
+  const toggCurrentLocation = (event) => {
+    setCurrentLocation(!currentLocation);
+
+  }
+
   const fetchWeatherWithMetric = (city, metric) => {
     if (metric) {
       fetchCurrentWeather(city, MEASUREMENT_SYSTEM.imperial);
@@ -163,13 +178,20 @@ const Home = (props) => {
           <button className="search-btn" onClick={searchBtnHandler}>Show weather</button>
       </div>
       
-      <div className="row switch center weather-measure-toggler">
-        <label>
-          Metric
-          <input type="checkbox" onChange={toggleMeasure} checked={measureTogglerChecked} />
-          <span className="lever"></span>
-          Imperial
-        </label>
+      <div className="weather-togglers">
+        <div className="row switch center weather-measure-toggler">
+          <label>
+            Metric
+            <input type="checkbox" onChange={toggleMeasure} checked={measureTogglerChecked} />
+            <span className="lever"></span>
+            Imperial
+          </label>
+        </div>
+
+        <div className="current-location" onClick={toggCurrentLocation} >
+            <input type="checkbox" checked={currentLocation} />
+            <span>Current location</span>
+        </div>
       </div>
 
       <div className="weather-forecast-wrap">

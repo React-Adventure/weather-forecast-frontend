@@ -57,10 +57,18 @@
     background: transparent !important;
   }
 
-  &-measure-toggler {
-    flex: 0 1 100%;
-
+  &-togglers {
     position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80%;
+  }
+
+  &-measure-toggler {
+    margin: 30px !important;
   
     & label {
       color: $theme-color !important;
@@ -120,33 +128,4 @@
   color: $theme-color;
   margin: 0;
   margin-top: 20px;
-}
-/*----------------- Materialaze CSS modified styles --------------------*/
-.switch label input[type=checkbox]:checked + .lever:after {
-  background-color: $theme-color;
-}
-
-.switch label input[type=checkbox]:checked + .lever {
-  background-color: rgba(0, 0, 0, 0.38);
-}
-
-.switch label .lever:after {
-  background-color: $theme-color;
-}
-
-.row {
-  margin-top: 20px;
-}
-
-.card-content {
-  padding: 0 !important;
-  width: 80%;
-}
-
-.card-title {
-  margin: 0;
-}
-
-.card .card-title {
-  font-weight: 600;
 }
