@@ -1,14 +1,48 @@
-
 @media screen and (max-width: 500px) {
-  .search-wrap {
-    flex-wrap: wrap;
+  .search {
+    &-wrap {
+      flex-wrap: wrap;
+    }
+
+    &-line-wrap {
+      width: 100% !important;
+    }
+
+    &-btn {
+      margin-bottom: 20px;
+      order: -1;
+    }
   }
 
-  .search-line-wrap {
-    width: 100% !important;
-  }
+  .weather {
+    &-cards-wrap {
+      top: 120px;
+    }
 
-  .search-btn {
-    margin-top: 20px;
+    &-measure-toggler {
+      top: 170px;
+    }
+  }
+}
+
+@media screen and (min-width: 500px) {
+
+  .weather {
+    &-cards-wrap {
+      top: 54px;
+    }
+
+    &-measure-toggler {
+      top: 74px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 1000px) {
+  .weather {
+    &-wrap {
+      width: 100%;
+    }
   }
 }

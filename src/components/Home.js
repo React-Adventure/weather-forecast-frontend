@@ -1,14 +1,32 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLocationDot, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySearch';
-import _ from 'lodash';
+import { fetchCurrentWeather } from '../redux/actions/currentWeater';
+import Weather from './Weather';
+import CitiesList from './CitiesList';
+import { MEASUREMENT_SYSTEM } from './consts';
+import MeasurementSystemContext from './context/MeasurementSystemContext';
 
 const Home = (props) => {
-  const { fetchSearchCities, cities, cleanSearchResults, loader } = props;
+  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI } = props;
+  const { weather, fetchCurrentWeather, weatherLoader } = props;
+
   const [citySearch, setCitySearch] = useState('');
   const [cityTipsActive, setCityTipsActive] = useState(true);
+
+  const [cityAndParams, setCityAndParams] = useState({});
+  const [measureTogglerChecked, setMeasureTogglerChecked] = useState(() => {
+    const togglerChecked = localStorage.getItem('toggler');
+
+    return (togglerChecked !== undefined && togglerChecked !== null) ? JSON.parse(togglerChecked) : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("toggler", JSON.stringify(measureTogglerChecked));
+  }, [measureTogglerChecked]);
 
   useEffect(() => {
     return () => {
@@ -19,13 +37,13 @@ const Home = (props) => {
 
   const debounceSearch = useCallback(
     _.debounce(citySearch => {
-        if(citySearch && cityTipsActive) {
+        if(citySearch) {
           fetchSearchCities(citySearch);
         } else {
           cleanSearchResults();
         }
     }), 
-  [citySearch, cityTipsActive]);
+  [citySearch]);
 
   const updateCitySearch = (event) => {
     setCityTipsActive(true);
@@ -37,6 +55,7 @@ const Home = (props) => {
 
   const handleClickedCity = (event) => {
     const cityNameElement = event.currentTarget.getElementsByClassName('city-name')[0];
+    
     setCitySearch(cityNameElement.innerText);
     
     event.currentTarget.parentNode.classList.remove('active');
@@ -44,36 +63,25 @@ const Home = (props) => {
   }
 
   const searchedCities = (citySearch) => {
-    if(!citySearch) {
+    if(!citySearch || !citySearch.trim()) {
       return;
     }
 
-    const mathcedCities = cities.filter(city => city.name.toUpperCase().startsWith(citySearch.toUpperCase()))
-    .map(city => {
-      return (
-        <li 
-        key={city.country + city.name}
-          className="search-results-item" 
-          onClick={handleClickedCity}
-        >
-          <FontAwesomeIcon
-          className="location-dot-icon"
-            icon={faLocationDot} 
-            size="2x"
-          /> 
-          <span className="city-name">{city.name}</span>
-        </li>
-      );
-    });
+    const matchedCities = cities.filter(city => city.name.toUpperCase()
+      .startsWith(citySearch.trim().toUpperCase()));
     
     return (
       <ul className="search-results-wrap active">
-        { mathcedCities.length !== 0 ? mathcedCities : 
+        { matchedCities.length !== 0 ? 
+          <CitiesList 
+            matchedCities={matchedCities} 
+            handleClickedCity={handleClickedCity} 
+          /> : 
           <li 
             key={'123'}
             className="search-results-item justify-content-center" 
           >
-            {loader ? 
+            {citiesLoader ? 
               <FontAwesomeIcon
                 className="fa-pulse spinner-icon"
                 icon={faSpinner} 
@@ -88,12 +96,46 @@ const Home = (props) => {
   };
  
   const searchBtnHandler = () => {
-    console.log('Btn clicked!');
+    const chosenCityName = citySearch;
+    const cityName = chosenCityName.split(',')[0].trim();
+    
+    const chosenCity = cities.find((el => el.name.toUpperCase() === cityName.toUpperCase()));
+    
+    if(chosenCity) {
+      if(chosenCity !== cityAndParams) {
+        setCityAndParams(chosenCity);
+      }
+
+      fetchWeatherWithMetric(chosenCity, measureTogglerChecked);
+      setCityTipsActive(false);
+    }
   };
+
+  const handleEnterPress = (event) => {
+    if(event.key === 'Enter') {
+      updateCitySearch(event);
+      searchBtnHandler();
+    }
+  };
+
+  const toggleMeasure = (event) => {
+    setMeasureTogglerChecked(!measureTogglerChecked);
+
+    fetchWeatherWithMetric(cityAndParams, event.target.checked);
+  };
+
+  const fetchWeatherWithMetric = (city, metric) => {
+    if (metric) {
+      fetchCurrentWeather(city, MEASUREMENT_SYSTEM.imperial);
+    } else {
+      fetchCurrentWeather(city, MEASUREMENT_SYSTEM.metric);
+    }
+  }
 
   return (
     <div className='wrap'>
-      <h1>Weather Forecast App</h1>
+      <h1>Weather Forecast</h1>
+      <div className="weather-wrapper">
       <div className="search-wrap"> 
         <div className="search-line-wrap">
           <div className="search-input-wrap"> 
@@ -104,19 +146,46 @@ const Home = (props) => {
             />       
             <input 
               type="text" 
-              placeholder="Type anything..." 
+              placeholder="Enter city name" 
               id="search" 
               autoComplete="off"
               value={citySearch}
               onChange={updateCitySearch}
+              onKeyPress={handleEnterPress}
             />
           </div>
             
             {cityTipsActive && searchedCities(citySearch)}
         </div>       
           
-            <button className="search-btn" onClick={searchBtnHandler}>Search</button>
-        </div>
+          <button className="search-btn" onClick={searchBtnHandler}>Show weather</button>
+      </div>
+      
+      <div className="row switch center weather-measure-toggler">
+        <label>
+          Metric
+          <input type="checkbox" onChange={toggleMeasure} checked={measureTogglerChecked} />
+          <span className="lever"></span>
+          Imperial
+        </label>
+      </div>
+
+      <div className="weather-cards-wrap">
+        {weatherLoader && 
+          <FontAwesomeIcon
+            className="fa-pulse spinner-icon"
+            icon={faSpinner} 
+            size="5x"
+          />
+        }
+        <MeasurementSystemContext.Provider 
+          value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
+        >
+          {weather.length !== 0 && <Weather />}
+        </MeasurementSystemContext.Provider>
+      </div>
+      </div>
+      
     </div>
   );
 };
@@ -124,13 +193,17 @@ const Home = (props) => {
 const mapStateToProps = state => {
   return {
     cities: state.citiesData.cities,
-    loader : state.citiesData.loader
+    citiesLoader : state.citiesData.loader,
+    citiesAPI : state.citiesData.citiesAPI,
+    weather: state.weatherData.weather,
+    weatherLoader: state.weatherData.weatherLoader
   };
 };
 
 const mapDispatchToProps = { 
   fetchSearchCities,
-  cleanSearchResults
+  cleanSearchResults,
+  fetchCurrentWeather
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

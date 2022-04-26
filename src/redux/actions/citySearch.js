@@ -5,38 +5,40 @@ import {
   CLEAN_SEARCH_RESULTS
 } from '../types';
 import cities from 'cities.json';
+import { citySearchURL } from '../api.js';
 
-let Cities = [];
-
-for(let i = 0; i < 100; i++) {
-  Cities.push(cities[i]);
-}
-
-const addSearchParams = (value) => {
+export const addSearchParams = (value) => {
   if(!value) {
       return '';
   }
 
-  return value;
+  return value.trim();
 }
 
 export const fetchSearchCities = (search) => {
-  addSearchParams(search);
-
-  return dispatch => {
+  const city = addSearchParams(search);
+  
+  return async dispatch => {
     try {
+      if(!city) {
+        return;
+      }
+
       dispatch({
         type: FETCH_SEARCH_CITY_LOADING
       });
 
-      const json = Cities.sort((curr, next) => (curr.name > next.name) ? 1 : ((next.name > curr.name) ? -1 : 0));
+      const json_mocked = cities.sort((curr, next) => (curr.name > next.name) ? 1 : ((next.name > curr.name) ? -1 : 0));
+      
+      const url = citySearchURL(city);
 
-      setTimeout(() => {
-        dispatch({
-          type: FETCH_SEARCH_CITY_SUCCESS,
-          payload: json
-        });
-      }, 2000);
+      const res = await fetch(url);
+      const json = await res.json();
+
+      dispatch({
+        type: FETCH_SEARCH_CITY_SUCCESS,
+        payload: { cities: json_mocked, citiesAPI: json }
+      });
 
     } catch(err) {
       console.log(err.toString());

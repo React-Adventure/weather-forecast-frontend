@@ -1,0 +1,122 @@
+@import './variables.scss';
+
+.weather-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  position: relative;
+}
+
+.weather {
+  &-cards-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    position: relative;
+    z-index: 1;
+
+    width: 80%;
+    margin: 20px 0;
+  }
+
+  &-card,
+  &-cards-wrap {
+    border-radius: 10px;
+    color: $theme-color;
+  }
+  
+  &-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 200px;
+    width: 250px;
+    padding: 20px 0;
+
+    background: $cards-bg !important;   
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+    }
+    
+    &-opts {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin: 0;
+    }
+
+    &-temperature {
+      font-size: 90px;
+    }
+
+    &-measure {
+      margin-left: 5px;
+    }
+  }
+
+  &-icon {
+    flex: 0 1 100%;
+    order: -1;
+    margin-bottom: 0;
+
+    height: 200px;
+
+    background: transparent !important;
+  }
+
+  &-measure-toggler {
+    flex: 0 1 100%;
+
+    position: relative;
+  
+    & label {
+      color: $theme-color !important;
+      font-size: 1em;
+    }
+  }
+}
+
+.wind-direction {
+  margin-bottom: 10px;
+}
+
+
+/*----------------- Materialaze CSS modified styles --------------------*/
+.switch label input[type=checkbox]:checked + .lever:after {
+  background-color: $theme-color;
+}
+
+.switch label input[type=checkbox]:checked + .lever {
+  background-color: rgba(0, 0, 0, 0.38);
+}
+
+.switch label .lever:after {
+  background-color: $theme-color;
+}
+
+.row {
+  margin-top: 20px;
+}
+
+.card-content {
+  padding: 0 !important;
+  width: 80%;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.card .card-title {
+  font-weight: 600;
+}
