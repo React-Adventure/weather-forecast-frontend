@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -6,15 +6,17 @@ import { connect } from 'react-redux';
 import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySearch';
 import { fetchCurrentWeather } from '../redux/actions/currentWeater';
 import Weather from './Weather';
+import Forecast from './Forecast';
 import CitiesList from './CitiesList';
 import { MEASUREMENT_SYSTEM } from './consts';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
-import Forecast from './Forecast';
 import CityContext from './context/CityContext';
+import { geolocated } from "react-geolocated";
+import { fetchCurrentGeoWeather } from '../redux/actions/currentLocation';
 
 const Home = (props) => {
-  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI } = props;
-  const { weather, fetchCurrentWeather, weatherLoader } = props;
+  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI, currentLocation } = props;
+  const { weather, fetchCurrentWeather, weatherLoader, fetchCurrentGeoWeather } = props;
 
   const [citySearch, setCitySearch] = useState('');
   const [cityTipsActive, setCityTipsActive] = useState(true);
@@ -25,20 +27,18 @@ const Home = (props) => {
 
     return (togglerChecked !== undefined && togglerChecked !== null) ? JSON.parse(togglerChecked) : false;
   });
+  const [currLocationToggler, setCurrLocationToggler] = useState(true);
+
 
   useEffect(() => {
     localStorage.setItem("toggler", JSON.stringify(measureTogglerChecked));
   }, [measureTogglerChecked]);
 
-  const [currentLocation, setCurrentLocation] = useState(() => {
-    const currentChecked = localStorage.getItem('currentLocation');
-
-    return (currentChecked !== undefined && currentChecked !== null) ? JSON.parse(currentChecked) : true;
-  });
-
   useEffect(() => {
-    localStorage.setItem("currentLocation", JSON.stringify(currentLocation));
-  }, [currentLocation]);
+    if(currLocationToggler && props.coords) {
+      handleCurrentLocation(props.coords);
+    }
+  }, [currLocationToggler, props.coords]);
 
   useEffect(() => {
     return () => {
@@ -46,6 +46,17 @@ const Home = (props) => {
         debounceSearch.cancel();
     }
   }, []);
+
+  useEffect(() => {
+    setCityAndParams(currentLocation);
+  }, [currentLocation]);
+
+  const handleCurrentLocation = (coords) => {  
+    const latitude = coords.latitude;
+    const longitude = coords.longitude;
+      
+      fetchCurrentGeoWeather(latitude, longitude, measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric);
+  };
 
   const debounceSearch = useCallback(
     _.debounce(citySearch => {
@@ -119,6 +130,8 @@ const Home = (props) => {
       }
 
       fetchWeatherWithMetric(chosenCity, measureTogglerChecked);
+
+      setCurrLocationToggler(false);
       setCityTipsActive(false);
     }
   };
@@ -137,12 +150,16 @@ const Home = (props) => {
   };
 
   const toggCurrentLocation = (event) => {
-    setCurrentLocation(!currentLocation);
-
+    event.stopPropagation();
+    if(!currLocationToggler) {
+      setCurrLocationToggler(true);
+    }
   }
 
-  const fetchWeatherWithMetric = (city, metric) => {
-    if (metric) {
+  const fetchWeatherWithMetric = (city, measurement) => {
+    setCitySearch('');
+
+    if (measurement) {
       fetchCurrentWeather(city, MEASUREMENT_SYSTEM.imperial);
     } else {
       fetchCurrentWeather(city, MEASUREMENT_SYSTEM.metric);
@@ -189,7 +206,7 @@ const Home = (props) => {
         </div>
 
         <div className="current-location" onClick={toggCurrentLocation} >
-            <input type="checkbox" checked={currentLocation} />
+            <input type="checkbox" checked={currLocationToggler} onChange={()=>{}} />
             <span>Current location</span>
         </div>
       </div>
@@ -232,14 +249,21 @@ const mapStateToProps = state => {
     citiesLoader : state.citiesData.loader,
     citiesAPI : state.citiesData.citiesAPI,
     weather: state.weatherData.weather,
-    weatherLoader: state.weatherData.weatherLoader
+    weatherLoader: state.weatherData.weatherLoader,
+    currentLocation: state.locationData.currLocation,
   };
 };
 
 const mapDispatchToProps = { 
   fetchSearchCities,
   cleanSearchResults,
-  fetchCurrentWeather
+  fetchCurrentWeather,
+  fetchCurrentGeoWeather
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(geolocated({
+  positionOptions: {
+    enableHighAccuracy: false,
+  },
+  userDecisionTimeout: 5000,
+})(Home));

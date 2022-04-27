@@ -1,5 +1,4 @@
-import { date } from "joi";
-import { weatherURL, currentAndForecastURL } from "../api";
+import { currentAndForecastURL } from "../api";
 import { 
   FETCH_WEATHER_LOADING, 
   FETCH_WEATHER_SUCCESS, 

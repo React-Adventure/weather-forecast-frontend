@@ -6,8 +6,8 @@ import {
 
 const initialState = {
   weather: [],
-  weatherLoader: false,
-  dailyForecast: []
+  weatherLoader: true,
+  dailyForecast: [],
 }
 
 export const currentWeatherReducer = (state = initialState, action) => {

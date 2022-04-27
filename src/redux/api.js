@@ -23,7 +23,13 @@ export const weatherURL = (city, units) => {
 };
 
 export const currentAndForecastURL = (city, units = 'metric') => {
-  const url = `${WEATHER_BASE_URL}${CURRENT_AND_FORECAST}lat=${city.lat}&lon=${city.lng}&exclude=${EXCLUDED_FORECAST}&appid=${API_KEY}&units=${units}`;
+  const url = `${WEATHER_BASE_URL}${CURRENT_AND_FORECAST}lat=${city.lat}&lon=${city.lng || city.lon}&exclude=${EXCLUDED_FORECAST}&appid=${API_KEY}&units=${units}`;
 
   return url;
 };
+
+export const currLocationURL = (lat, lon) => {
+  const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+
+  return url;
+}
