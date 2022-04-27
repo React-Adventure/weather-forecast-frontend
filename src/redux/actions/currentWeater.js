@@ -34,8 +34,6 @@ export const fetchCurrentWeather = (city, units = 'metric') => {
 
       const res = await fetch(url);
       const json = await res.json();
-      console.log(json);
-      console.log((new Date(json.current.dt * 1000)).toDateString('en-US', {weekday: 'long'}));
 
       dispatch({
         type: FETCH_WEATHER_SUCCESS,

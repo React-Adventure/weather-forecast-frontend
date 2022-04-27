@@ -45,3 +45,12 @@
     }
   }
 }
+
+@media screen and (min-width: 900px) and (max-width: 1700px) {
+  .forecast {
+    &-cards-wrap .row {
+        flex: 0 0 25%;
+        margin: 20px 0;
+    }
+  }
+}

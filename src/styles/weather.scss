@@ -103,6 +103,7 @@
   }
 }
 
+
 .weekly-forecast-title {
   flex: 0 1 100%;
 
@@ -125,7 +126,9 @@
 }
 
 .today-weather-title {
-  color: $theme-color;
   margin: 0;
   margin-top: 20px;
+
+  text-align: center;
+  color: $theme-color;
 }
