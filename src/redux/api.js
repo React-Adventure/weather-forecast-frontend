@@ -9,7 +9,7 @@ const LIMIT = 30;
 const WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5';
 const WEATHER ='/weather?';
 const CURRENT_AND_FORECAST ='/onecall?';
-const EXCLUDED_FORECAST = ['minutely', 'hourly', 'alerts'].join(',');
+const EXCLUDED_FORECAST = ['minutely', 'alerts'].join(',');
 
 
 export const citySearchURL = (cityName) => {
@@ -29,7 +29,7 @@ export const currentAndForecastURL = (city, units = 'metric') => {
 };
 
 export const currLocationURL = (lat, lon) => {
-  const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+  const url = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
   return url;
 }
