@@ -14,7 +14,7 @@ const WeatherCard = (props) => {
   let src = '';
   let descr = '';
   if (weather.length !== 0 && cardType === CARD_TYPE.icon) {
-    src = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
+    src = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
     descr = weather.weather[0].description.toUpperCase();
   }
 
