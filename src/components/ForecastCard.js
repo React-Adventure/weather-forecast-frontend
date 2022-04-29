@@ -12,7 +12,7 @@ const ForecastCard = (props) => {
 
   useEffect(() => {
     if(forecast) {
-      setIconSrc(`http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`);
+      setIconSrc(`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`);
       setIconAlt(forecast.weather[0].description);
     }
   }, [forecast]);
