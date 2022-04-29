@@ -1,12 +1,13 @@
 import {
   FETCH_WEATHER_FAIL,
   FETCH_WEATHER_SUCCESS,
-  FETCH_WEATHER_LOADING
+  FETCH_WEATHER_LOADING,
+  CLEAN_WEATHER_RESULTS
 } from '../types';
 
 const initialState = {
   weather: [],
-  weatherLoader: true,
+  weatherLoader: false,
   dailyForecast: [],
 }
 
@@ -33,6 +34,12 @@ export const currentWeatherReducer = (state = initialState, action) => {
         weather: [],
         dailyForecast: []
       };
+    case CLEAN_WEATHER_RESULTS: 
+      return {
+        ...state,
+        weather: [],
+        dailyForecast: []
+      }
     default: 
       return state;
   }

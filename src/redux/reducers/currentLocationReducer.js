@@ -5,7 +5,8 @@ import {
 } from '../types';
 
 const initialState = {
-  currLocation: {}
+  currLocation: {},
+  currLocationLoader: false,
 }
 
 export const currentLocationReducer = (state = initialState, action) => {
@@ -13,17 +14,20 @@ export const currentLocationReducer = (state = initialState, action) => {
     case FETCH_CURR_LOCATION_LOADING:
       return {
         ...state,
-        currLocation: {}
+        currLocation: {},
+        currLocationLoader: true,
       };
     case FETCH_CURR_LOCATION_SUCCESS:
       return {
         ...state,
         currLocation: action.payload.currLocation || {},
+        currLocationLoader: false,
       };
     case FETCH_CURR_LOCATION_FAIL:
       return {
         ...state,
-        currLocation: {}
+        currLocation: {},
+        currLocationLoader: false,
       };
     default: 
       return state;

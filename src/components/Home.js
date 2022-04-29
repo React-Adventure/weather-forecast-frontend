@@ -15,7 +15,7 @@ import { geolocated } from "react-geolocated";
 import { fetchCurrentGeoWeather } from '../redux/actions/currentLocation';
 
 const Home = (props) => {
-  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI, currentLocation } = props;
+  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI, currentLocation, currLocationLoader } = props;
   const { weather, fetchCurrentWeather, weatherLoader, fetchCurrentGeoWeather } = props;
 
   const [citySearch, setCitySearch] = useState('');
@@ -212,7 +212,7 @@ const Home = (props) => {
       </div>
 
       <div className="weather-forecast-wrap">
-        {weatherLoader && 
+        {(weatherLoader || currLocationLoader) && 
           <FontAwesomeIcon
             className="fa-pulse spinner-icon"
             icon={faSpinner} 
@@ -251,6 +251,7 @@ const mapStateToProps = state => {
     weather: state.weatherData.weather,
     weatherLoader: state.weatherData.weatherLoader,
     currentLocation: state.locationData.currLocation,
+    currLocationLoader: state.locationData.currLocationLoader
   };
 };
 

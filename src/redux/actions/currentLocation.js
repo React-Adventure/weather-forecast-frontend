@@ -4,7 +4,7 @@ import {
   FETCH_CURR_LOCATION_FAIL,
   FETCH_CURR_LOCATION_LOADING
 } from "../types";
-import { fetchCurrentWeather } from "./currentWeater";
+import { fetchCurrentWeather, cleanWeatherResults } from "./currentWeater";
 
 export const fetchCurrentGeoWeather = (lat, lon, measurement) => {
   return async dispatch => {
@@ -12,6 +12,7 @@ export const fetchCurrentGeoWeather = (lat, lon, measurement) => {
       dispatch({
         type: FETCH_CURR_LOCATION_LOADING
       });
+      dispatch(cleanWeatherResults());
       
       const url = currLocationURL(lat, lon);
 
