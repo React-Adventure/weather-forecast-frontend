@@ -16,19 +16,6 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-
-    position: relative;
-    z-index: 1;
-
-    width: 80%;
-    margin: 20px 0;
-  }
-
-  &-card,
-  &-cards-wrap {
-    border-radius: 10px;
-    color: $theme-color;
   }
   
   &-card {
@@ -58,10 +45,6 @@
     &-temperature {
       font-size: 90px;
     }
-
-    &-measure {
-      margin-left: 5px;
-    }
   }
 
   &-icon {
@@ -74,10 +57,18 @@
     background: transparent !important;
   }
 
-  &-measure-toggler {
-    flex: 0 1 100%;
-
+  &-togglers {
     position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80%;
+  }
+
+  &-measure-toggler {
+    margin: 30px !important;
   
     & label {
       color: $theme-color !important;
@@ -90,33 +81,54 @@
   margin-bottom: 10px;
 }
 
+/*----------------- Forecast --------------------*/
+.forecast {
+  &-cards-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 
-/*----------------- Materialaze CSS modified styles --------------------*/
-.switch label input[type=checkbox]:checked + .lever:after {
-  background-color: $theme-color;
+  &-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    width: 150px;
+    padding-bottom: 10px;
+
+    background: $cards-bg !important;  
+  }
 }
 
-.switch label input[type=checkbox]:checked + .lever {
-  background-color: rgba(0, 0, 0, 0.38);
+
+.weekly-forecast-title {
+  flex: 0 1 100%;
+
+  color: $theme-color;
+  text-align: center;
 }
 
-.switch label .lever:after {
-  background-color: $theme-color;
+/*----------------- Forecast & weather --------------------*/
+.forecast,
+.weather {
+  &-card,
+  &-cards-wrap {
+    border-radius: 10px;
+    color: $theme-color;
+  }
+  
+  &-card-measure {
+    margin-left: 5px;
+  }
 }
 
-.row {
-  margin-top: 20px;
-}
-
-.card-content {
-  padding: 0 !important;
-  width: 80%;
-}
-
-.card-title {
+.today-weather-title {
   margin: 0;
-}
+  margin-top: 20px;
 
-.card .card-title {
-  font-weight: 600;
+  text-align: center;
+  color: $theme-color;
 }

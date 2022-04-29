@@ -2,17 +2,19 @@ import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
 import { CARD_TYPE, MEASUREMENT, MEASUREMENT_SYSTEM } from './consts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
+import CityContext from './context/CityContext';
 
 const WeatherCard = (props) => {
   const { weather, cardType } = props;
   const { measureSystem } = useContext(MeasurementSystemContext);
+  const { cityAndParams } = useContext(CityContext);
 
   let src = '';
   let descr = '';
   if (weather.length !== 0 && cardType === CARD_TYPE.icon) {
-    src = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
+    src = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
     descr = weather.weather[0].description.toUpperCase();
   }
 
@@ -24,14 +26,14 @@ const WeatherCard = (props) => {
           opts: [
             <p className="weather-card-opts justify-content-center">
               <span className="weather-card-temperature">
-                {Math.round(data?.main?.temp)}&#xb0;
+                {Math.round(data?.temp)}&#xb0;
                 <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.temp : MEASUREMENT.metric.temp}</span>
               </span>
             </p>,
             <p className="weather-card-opts">
               <span>Feels like:</span>
               <span>
-                {Math.round(data?.main?.feels_like)}&#xb0;
+                {Math.round(data?.feels_like)}&#xb0;
                 <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.temp : MEASUREMENT.metric.temp}</span>
               </span>
             </p>
@@ -44,22 +46,22 @@ const WeatherCard = (props) => {
             <p className="weather-card-opts justify-content-center">
               <FontAwesomeIcon
                 className="wind-direction fa-rotate-by"
-                icon={faArrowUpLong} 
-                style={{"--fa-rotate-angle": `${data?.wind?.deg}deg`}}
+                icon={faArrowRightLong} 
+                style={{"--fa-rotate-angle": `-${data?.wind_deg}deg`}}
                 size="3x"
               />
             </p>,
             <p className="weather-card-opts">
               <span>Speed:</span>
               <span>
-                {data?.wind?.speed}
+                {data?.wind_speed}
                 <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.windSpeed : MEASUREMENT.metric.windSpeed}</span>
               </span>
             </p>,
             <p className="weather-card-opts">
               <span>Gust:</span>
               <span>
-                { weather?.wind?.gust || '-' }
+                { weather?.wind_gust || '-' }
                 <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.windGust : MEASUREMENT.metric.windGust}</span>
               </span>
             </p>
@@ -71,21 +73,21 @@ const WeatherCard = (props) => {
             <p className="weather-card-opts">
                 <span>Pressure:</span>
                 <span>
-                  {data?.main?.pressure}
+                  {data?.pressure}
                   <span className="weather-card-measure">hPa</span>
                 </span>
             </p>,
             <p className="weather-card-opts">
               <span>Humidity:</span>
               <span>
-                {data?.main?.humidity}
+                {data?.humidity}
                 <span className="weather-card-measure">%</span>
               </span>
             </p>,
             <p className="weather-card-opts">
               <span>Clouds:</span>
               <span>
-                {data?.clouds?.all}
+                {data?.clouds}
                 <span className="weather-card-measure">%</span>
               </span>
             </p>,
@@ -112,7 +114,7 @@ const WeatherCard = (props) => {
   return (
     cardType === CARD_TYPE.icon ? 
       <div className=" row weather-card weather-icon">
-        <h5 className="f-w-600" style={{margin: 0}}>{weather.name}</h5>
+        <h5 className="f-w-600" style={{margin: 0}}>{cityAndParams.name}</h5>
         <img src={src}></img>
         <span className="f-w-600">{descr}</span>
       </div> 

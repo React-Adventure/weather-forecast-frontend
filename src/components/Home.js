@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -6,13 +6,17 @@ import { connect } from 'react-redux';
 import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySearch';
 import { fetchCurrentWeather } from '../redux/actions/currentWeater';
 import Weather from './Weather';
+import Forecast from './Forecast';
 import CitiesList from './CitiesList';
 import { MEASUREMENT_SYSTEM } from './consts';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
+import CityContext from './context/CityContext';
+import { geolocated } from "react-geolocated";
+import { fetchCurrentGeoWeather } from '../redux/actions/currentLocation';
 
 const Home = (props) => {
-  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI } = props;
-  const { weather, fetchCurrentWeather, weatherLoader } = props;
+  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI, currentLocation, currLocationLoader } = props;
+  const { weather, fetchCurrentWeather, weatherLoader, fetchCurrentGeoWeather } = props;
 
   const [citySearch, setCitySearch] = useState('');
   const [cityTipsActive, setCityTipsActive] = useState(true);
@@ -23,10 +27,18 @@ const Home = (props) => {
 
     return (togglerChecked !== undefined && togglerChecked !== null) ? JSON.parse(togglerChecked) : false;
   });
+  const [currLocationToggler, setCurrLocationToggler] = useState(true);
+
 
   useEffect(() => {
     localStorage.setItem("toggler", JSON.stringify(measureTogglerChecked));
   }, [measureTogglerChecked]);
+
+  useEffect(() => {
+    if(currLocationToggler && props.coords) {
+      handleCurrentLocation(props.coords);
+    }
+  }, [currLocationToggler, props.coords]);
 
   useEffect(() => {
     return () => {
@@ -34,6 +46,17 @@ const Home = (props) => {
         debounceSearch.cancel();
     }
   }, []);
+
+  useEffect(() => {
+    setCityAndParams(currentLocation);
+  }, [currentLocation]);
+
+  const handleCurrentLocation = (coords) => {  
+    const latitude = coords.latitude;
+    const longitude = coords.longitude;
+      
+      fetchCurrentGeoWeather(latitude, longitude, measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric);
+  };
 
   const debounceSearch = useCallback(
     _.debounce(citySearch => {
@@ -107,6 +130,8 @@ const Home = (props) => {
       }
 
       fetchWeatherWithMetric(chosenCity, measureTogglerChecked);
+
+      setCurrLocationToggler(false);
       setCityTipsActive(false);
     }
   };
@@ -124,8 +149,17 @@ const Home = (props) => {
     fetchWeatherWithMetric(cityAndParams, event.target.checked);
   };
 
-  const fetchWeatherWithMetric = (city, metric) => {
-    if (metric) {
+  const toggCurrentLocation = (event) => {
+    event.stopPropagation();
+    if(!currLocationToggler) {
+      setCurrLocationToggler(true);
+    }
+  }
+
+  const fetchWeatherWithMetric = (city, measurement) => {
+    setCitySearch('');
+
+    if (measurement) {
       fetchCurrentWeather(city, MEASUREMENT_SYSTEM.imperial);
     } else {
       fetchCurrentWeather(city, MEASUREMENT_SYSTEM.metric);
@@ -161,17 +195,24 @@ const Home = (props) => {
           <button className="search-btn" onClick={searchBtnHandler}>Show weather</button>
       </div>
       
-      <div className="row switch center weather-measure-toggler">
-        <label>
-          Metric
-          <input type="checkbox" onChange={toggleMeasure} checked={measureTogglerChecked} />
-          <span className="lever"></span>
-          Imperial
-        </label>
+      <div className="weather-togglers">
+        <div className="row switch center weather-measure-toggler">
+          <label>
+            Metric
+            <input type="checkbox" onChange={toggleMeasure} checked={measureTogglerChecked} />
+            <span className="lever"></span>
+            Imperial
+          </label>
+        </div>
+
+        <div className="current-location" onClick={toggCurrentLocation} >
+            <input type="checkbox" checked={currLocationToggler} onChange={()=>{}} />
+            <span>Current location</span>
+        </div>
       </div>
 
-      <div className="weather-cards-wrap">
-        {weatherLoader && 
+      <div className="weather-forecast-wrap">
+        {(weatherLoader || currLocationLoader) && 
           <FontAwesomeIcon
             className="fa-pulse spinner-icon"
             icon={faSpinner} 
@@ -181,7 +222,19 @@ const Home = (props) => {
         <MeasurementSystemContext.Provider 
           value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
         >
-          {weather.length !== 0 && <Weather />}
+          {weather.length !== 0 && 
+            <> 
+              <h4 className="today-weather-title">
+                {(new Date(weather.dt * 1000))
+                  .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+                }
+              </h4>
+              <CityContext.Provider value={{cityAndParams}}>
+                <Weather /> 
+              </CityContext.Provider>
+              <Forecast /> 
+            </>
+          }
         </MeasurementSystemContext.Provider>
       </div>
       </div>
@@ -196,14 +249,22 @@ const mapStateToProps = state => {
     citiesLoader : state.citiesData.loader,
     citiesAPI : state.citiesData.citiesAPI,
     weather: state.weatherData.weather,
-    weatherLoader: state.weatherData.weatherLoader
+    weatherLoader: state.weatherData.weatherLoader,
+    currentLocation: state.locationData.currLocation,
+    currLocationLoader: state.locationData.currLocationLoader
   };
 };
 
 const mapDispatchToProps = { 
   fetchSearchCities,
   cleanSearchResults,
-  fetchCurrentWeather
+  fetchCurrentWeather,
+  fetchCurrentGeoWeather
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(geolocated({
+  positionOptions: {
+    enableHighAccuracy: false,
+  },
+  userDecisionTimeout: 5000,
+})(Home));

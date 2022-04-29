@@ -35,7 +35,8 @@ export const searchCityReducer = (state = initialState, action) => {
     case CLEAN_SEARCH_RESULTS:
       return {
         ...state,
-        cities: []
+        cities: [],
+        citiesAPI: []
       };
     default: 
       return state;

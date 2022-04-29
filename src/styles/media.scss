@@ -15,24 +15,23 @@
   }
 
   .weather {
-    &-cards-wrap {
-      top: 120px;
+    &-forecast-wrap {
+      top: 155px;
     }
 
-    &-measure-toggler {
+    &-togglers {
       top: 170px;
     }
   }
 }
 
 @media screen and (min-width: 500px) {
-
   .weather {
-    &-cards-wrap {
+    &-forecast-wrap {
       top: 54px;
     }
 
-    &-measure-toggler {
+    &-togglers {
       top: 74px;
     }
   }
@@ -41,8 +40,17 @@
 
 @media screen and (max-width: 1000px) {
   .weather {
-    &-wrap {
-      width: 100%;
+    &-forecast-wrap {
+      width: 100% !important;
+    }
+  }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1700px) {
+  .forecast {
+    &-cards-wrap .row {
+        flex: 0 0 25%;
+        margin: 20px 0;
     }
   }
 }

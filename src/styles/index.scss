@@ -3,7 +3,6 @@
 @import './media.scss';
 @import './searchBar.scss';
 @import './weather.scss';
-@import './forecast';
 
 //********************* COMMON STYLES *********************
 
@@ -39,4 +38,65 @@ h1 {
 
 .f-w-600 {
   font-weight: 600;
+}
+
+.weather-forecast-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  z-index: 1;
+
+  width: 80%;
+  margin: 20px 0;
+}
+
+.current-location {
+  color: $theme-color;
+}
+
+/*----------------- Materialaze CSS modified styles --------------------*/
+.switch label input[type=checkbox]:checked + .lever:after {
+  background-color: $theme-color;
+}
+
+.switch label input[type=checkbox]:checked + .lever {
+  background-color: rgba(0, 0, 0, 0.38);
+}
+
+.switch label .lever:after {
+  background-color: $theme-color;
+}
+
+.row {
+  margin-top: 20px;
+}
+
+.card-content {
+  padding: 0 !important;
+  width: 80%;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.card .card-title {
+  font-weight: 600;
+}
+
+[type=checkbox]:checked + span:not(.lever):before {
+  border-right: 2px solid $theme-color;
+  border-bottom: 2px solid $theme-color;
+}
+
+[type=checkbox] + span:not(.lever):before {
+  border: 2px solid $theme-color;
+}
+
+.row .col.s12 {
+  display: flex;
+  justify-content: center;
 }

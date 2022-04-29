@@ -9,6 +9,7 @@ const LIMIT = 30;
 const WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5';
 const WEATHER ='/weather?';
 const CURRENT_AND_FORECAST ='/onecall?';
+const EXCLUDED_FORECAST = ['minutely', 'alerts'].join(',');
 
 
 export const citySearchURL = (cityName) => {
@@ -21,8 +22,14 @@ export const weatherURL = (city, units) => {
   return url;
 };
 
-export const forecastURL = (city/*, units = 'metric', part*/) => {
-  const url = `${WEATHER_BASE_URL}${CURRENT_AND_FORECAST}lat=${city.lat}&lon=${city.lng}&exclude={minutely,hourly,alerts}&appid=${API_KEY}&units={metric}}`;
+export const currentAndForecastURL = (city, units = 'metric') => {
+  const url = `${WEATHER_BASE_URL}${CURRENT_AND_FORECAST}lat=${city.lat}&lon=${city.lng || city.lon}&exclude=${EXCLUDED_FORECAST}&appid=${API_KEY}&units=${units}`;
 
   return url;
 };
+
+export const currLocationURL = (lat, lon) => {
+  const url = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+
+  return url;
+}
