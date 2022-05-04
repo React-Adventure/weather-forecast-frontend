@@ -35,6 +35,9 @@ h1 {
   justify-content: center;
 }
 
+.theme-text-color {
+  color: $theme-color;
+}
 
 .f-w-600 {
   font-weight: 600;
@@ -55,6 +58,13 @@ h1 {
 
 .current-location {
   color: $theme-color;
+}
+
+.today-forecast {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /*----------------- Materialaze CSS modified styles --------------------*/

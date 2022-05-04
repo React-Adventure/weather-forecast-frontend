@@ -40,7 +40,7 @@ export const fetchCurrentWeather = (city, units = 'metric') => {
         payload: { 
           weather: json.current, 
           dailyForecast: json.daily,
-          hourlyForecast: json.hourly
+          hourlyForecast: json.hourly,
         }
       });
 

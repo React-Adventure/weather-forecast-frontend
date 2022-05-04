@@ -9,6 +9,7 @@ const initialState = {
   weather: [],
   weatherLoader: false,
   dailyForecast: [],
+  hourlyForecast: []
 }
 
 export const currentWeatherReducer = (state = initialState, action) => {
@@ -18,27 +19,31 @@ export const currentWeatherReducer = (state = initialState, action) => {
         ...state,
         weatherLoader: true,
         weather: [],
-        dailyForecast: []
+        dailyForecast: [],
+        hourlyForecast: []
       };
     case FETCH_WEATHER_SUCCESS:
       return {
         ...state,
         weatherLoader: false,
         weather: action.payload.weather || [],
-        dailyForecast: action.payload.dailyForecast || []
+        dailyForecast: action.payload.dailyForecast || [],
+        hourlyForecast: action.payload.hourlyForecast || []
       };
     case FETCH_WEATHER_FAIL:
       return {
         ...state,
         weatherLoader: false,
         weather: [],
-        dailyForecast: []
+        dailyForecast: [],
+        hourlyForecast: []
       };
     case CLEAN_WEATHER_RESULTS: 
       return {
         ...state,
         weather: [],
-        dailyForecast: []
+        dailyForecast: [],
+        hourlyForecast: []
       }
     default: 
       return state;

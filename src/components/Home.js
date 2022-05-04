@@ -13,6 +13,7 @@ import MeasurementSystemContext from './context/MeasurementSystemContext';
 import CityContext from './context/CityContext';
 import { geolocated } from "react-geolocated";
 import { fetchCurrentGeoWeather } from '../redux/actions/currentLocation';
+import HourlyChart from './HourlyChart';
 
 const Home = (props) => {
   const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI, currentLocation, currLocationLoader } = props;
@@ -210,6 +211,7 @@ const Home = (props) => {
             <span>Current location</span>
         </div>
       </div>
+      <HourlyChart />
 
       <div className="weather-forecast-wrap">
         {(weatherLoader || currLocationLoader) && 
@@ -230,7 +232,9 @@ const Home = (props) => {
                 }
               </h4>
               <CityContext.Provider value={{cityAndParams}}>
-                <Weather /> 
+                <div className="today-forecast">
+                  <Weather /> 
+                </div>
               </CityContext.Provider>
               <Forecast /> 
             </>
