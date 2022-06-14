@@ -12,8 +12,8 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     margin: '50px',
-    width: '500px',
-    height: '200px'
+    width: '800px',
+    height: '600px'
   }
 };
 
@@ -298,8 +298,7 @@ const HourlyChart = (props) => {
   useEffect(() => {
     console.log(hourlyForecast);
     const a = {
-      "id": "ngf",
-      "color": "hsl(14, 70%, 50%)",
+      "id": "temp"
     };
 
     const data = hourlyForecast.slice(0,24).map((elem, ind) => {
@@ -309,7 +308,7 @@ const HourlyChart = (props) => {
                 hour: 'numeric',
                 hour12: true
             }),
-        y: elem.temp,
+        y: elem.temp + '°',
       }
     });
     setChartDataNivo([{...a, data}]);
@@ -322,46 +321,45 @@ const HourlyChart = (props) => {
                 hour: 'numeric',
                 hour12: true
             }),
-        y: elem.temp,
+        y: elem.temp + '°',
       }
     }))
 
   }, [hourlyForecast]);
+  useEffect(() => {
+    console.log('Chart data:', chartDataNivo);
+  }, [chartDataNivo])
 
   return (
+    hourlyForecast.length !== 0 && 
     <div className="hourly-chart-wrap" style={styles.chartsWrap}>
-      {/* <VictoryChart
-        theme={{...VictoryTheme.material,  }}
-      >
-        <VictoryLine
-          animate={{
-            duration: 2000,
-            onLoad: { duration: 1000 }
-          }}
-          style={{
-            data: { stroke: "#c43a31" },
-            parent: { border: "1px solid #ccc"}
-          }}
-          data={chartData}
-        />
-      </VictoryChart> */}
-
-      {/* <ResponsiveContainer>
-        <LineChart width={600} height={150} data={data}>
-          <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-          <CartesianGrid stroke="#ccc" />
-          <XAxis dataKey="name" />
-          <YAxis />
-        </LineChart>
-      </ResponsiveContainer> */}
-      
       <ResponsiveLine
-      theme={{fontFamily: 'Quicksand'}}
+      theme={{
+        fontFamily: 'Quicksand',
+        axsis: {
+          tickColor: "#D99426",
+          ticks: {
+            line: {
+              stroke: "#5CD926"
+            },
+            text: {
+              fill: "#D92635"
+            }
+          },
+          legend: {
+            text: {
+              fill: '#2638D9'
+            }
+          }
+        }
+      }}
+      curve="linear"
       data={chartDataNivo}
       margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
       enableGridX={false}
       enableGridY={false}
-      colors={{ scheme: 'category10' }}
+      enablePointLabel={true}
+      colors={[ '#5B4059' ]}
       xScale={{ type: 'point' }}
       yScale={{
           type: 'linear',
@@ -370,34 +368,33 @@ const HourlyChart = (props) => {
           stacked: true,
           reverse: false
       }}
-      curve="cardinal"
-      yFormat=" >-.2f"
+      // curve="cardinal"
+      yFormat=" >-.2d"
       axisTop={null}
       axisRight={null}
+      axisLeft={null}
       axisBottom={{
           orient: 'bottom',
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,
-          legend: 'Time',
-          legendOffset: 36,
-          legendPosition: 'middle'
+          tickRotation: 0
       }}
-      axisLeft={{
-          orient: 'left',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'Temperature',
-          legendOffset: -40,
-          legendPosition: 'middle'
-      }}
-      pointSize={2}
-      pointColor={"#61CDBB"}
-      pointBorderWidth={2}
-      pointBorderColor={ "#61CDBB" }
+      // axisLeft={{
+      //     orient: 'left',
+      //     tickSize: 5,
+      //     tickPadding: 5,
+      //     tickRotation: 0,
+      //     legend: 'Temperature',
+      //     legendOffset: -40,
+      //     legendPosition: 'middle',
+      // }}
+      pointSize={3}
+      pointColor={"#5B4059"}
+      pointBorderWidth={3}
+      pointBorderColor={ "#5B4059" }
       pointLabelYOffset={-12}
       useMesh={true}
+      // lineWidth={4}
       // legends={[
       //     {
       //         anchor: 'bottom-right',
@@ -429,75 +426,6 @@ const HourlyChart = (props) => {
     </div>
   );
 };
-
-const MyResponsiveLine = ({ data /* see data tab */ }) => (
-  <ResponsiveLine
-      data={data}
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-      xScale={{ type: 'point' }}
-      yScale={{
-          type: 'linear',
-          min: 'auto',
-          max: 'auto',
-          stacked: true,
-          reverse: false
-      }}
-      yFormat=" >-.2f"
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-          orient: 'bottom',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'transportation',
-          legendOffset: 36,
-          legendPosition: 'middle'
-      }}
-      axisLeft={{
-          orient: 'left',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'count',
-          legendOffset: -40,
-          legendPosition: 'middle'
-      }}
-      pointSize={10}
-      pointColor={{ theme: 'background' }}
-      pointBorderWidth={2}
-      pointBorderColor={{ from: 'serieColor' }}
-      pointLabelYOffset={-12}
-      useMesh={true}
-      legends={[
-          {
-              anchor: 'bottom-right',
-              direction: 'column',
-              justify: false,
-              translateX: 100,
-              translateY: 0,
-              itemsSpacing: 0,
-              itemDirection: 'left-to-right',
-              itemWidth: 80,
-              itemHeight: 20,
-              itemOpacity: 0.75,
-              symbolSize: 12,
-              symbolShape: 'circle',
-              symbolBorderColor: 'rgba(0, 0, 0, .5)',
-              effects: [
-                  {
-                      on: 'hover',
-                      style: {
-                          itemBackground: 'rgba(0, 0, 0, .03)',
-                          itemOpacity: 1
-                      }
-                  }
-              ]
-          }
-      ]}
-  />
-);
-
 
 const mapStateToProps = (state) => {
   return {
