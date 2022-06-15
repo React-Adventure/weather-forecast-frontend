@@ -3,18 +3,6 @@ import { connect } from 'react-redux';
 import { ResponsiveLine } from '@nivo/line';
 import responsiveLineProps from '../utils/responsiveLineProps';
 
-const styles = {
-  chartsWrap: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: '50px',
-    width: '800px',
-    height: '600px'
-  }
-};
-
 const data = [
   {
     "id": "japan",
@@ -324,30 +312,30 @@ const HourlyChart = (props) => {
 
   return (
     hourlyForecast.length !== 0 && 
-    <div className="hourly-chart-wrap" style={styles.chartsWrap}>
+    <div className="hourly-chart-wrap">
+      {/* <h6>Today</h6> */}
       <ResponsiveLine
-      data={chartDataNivo}
-      tooltip={ ({ point }) => {
-        console.log('sdsdsd:', point);
-        return (
-          <div className='hourly-chart-tooltip'>
-            <img 
-              style={{
-                width: '50px',
-                height: '50px',
-              }} 
-              src={`https://openweathermap.org/img/wn/${point.data.iconSrc}@2x.png`} 
-              alt={point.data.iconAlt}>
+        data={chartDataNivo}
+        tooltip={ ({ point }) => {
+          console.log('sdsdsd:', point);
+          return (
+            <div className='hourly-chart-tooltip'>
+              <img 
+                style={{
+                  width: '50px',
+                  height: '50px',
+                }} 
+                src={`https://openweathermap.org/img/wn/${point.data.iconSrc}@2x.png`} 
+                alt={point.data.iconAlt}>
 
-            </img>
-            <div>{point.data.yFormatted  + '°'}</div>
-            <div>{point.data.xFormatted}</div>
-          </div>
-        )
-      }}
-    {...responsiveLineProps}
-  />
-
+              </img>
+              <div>{point.data.yFormatted  + '°'}</div>
+              <div>{point.data.xFormatted}</div>
+            </div>
+          )
+        }}
+        {...responsiveLineProps}
+      />
     </div>
   );
 };
