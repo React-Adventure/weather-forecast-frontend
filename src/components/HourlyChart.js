@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import * as V from 'victory';
-import { VictoryChart, VictoryLine, VictoryTheme } from 'victory';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
-import { ResponsiveLine } from '@nivo/line'
+import { ResponsiveLine } from '@nivo/line';
+import responsiveLineProps from '../utils/responsiveLineProps';
 
 const styles = {
   chartsWrap: {
@@ -292,135 +290,62 @@ const data = [
 
 const HourlyChart = (props) => {
   const { hourlyForecast } = props;
-  const [chartData, setChartData] = useState([]);
   const [chartDataNivo, setChartDataNivo] = useState([]);
 
   useEffect(() => {
-    console.log(hourlyForecast);
-    const a = {
-      "id": "temp"
-    };
+    if(hourlyForecast.length !== 0) {
+      console.log('FORECAST: ', hourlyForecast);
+      const a = {
+        "id": "temp"
+      };
+  
+      const data = hourlyForecast.slice(0,24).map((elem, ind) => {
+        return {
+          x: (new Date(elem.dt * 1000))
+              .toLocaleTimeString ('en-US', {
+                  hour: 'numeric',
+                  hour12: true
+              }),
+          y: elem.temp,
+          iconSrc: elem.weather[0].icon,
+          iconAlt: elem.weather[0].description
+        }
+      });
+      setChartDataNivo([{...a, data}]);
 
-    const data = hourlyForecast.slice(0,24).map((elem, ind) => {
-      return {
-        x: (new Date(elem.dt * 1000))
-            .toLocaleTimeString ('en-US', {
-                hour: 'numeric',
-                hour12: true
-            }),
-        y: elem.temp + '°',
-      }
-    });
-    setChartDataNivo([{...a, data}]);
-
-    setChartData(hourlyForecast.slice(0,24).map((elem, ind) => {
-      // if(ind <= 23)
-      return {
-        x: (new Date(elem.dt * 1000))
-            .toLocaleTimeString ('en-US', {
-                hour: 'numeric',
-                hour12: true
-            }),
-        y: elem.temp + '°',
-      }
-    }))
-
+    }
   }, [hourlyForecast]);
+
+  //----------------------------------------------------
   useEffect(() => {
     console.log('Chart data:', chartDataNivo);
   }, [chartDataNivo])
+  //----------------------------------------------------
 
   return (
     hourlyForecast.length !== 0 && 
     <div className="hourly-chart-wrap" style={styles.chartsWrap}>
       <ResponsiveLine
-      theme={{
-        fontFamily: 'Quicksand',
-        axsis: {
-          tickColor: "#D99426",
-          ticks: {
-            line: {
-              stroke: "#5CD926"
-            },
-            text: {
-              fill: "#D92635"
-            }
-          },
-          legend: {
-            text: {
-              fill: '#2638D9'
-            }
-          }
-        }
-      }}
-      curve="linear"
       data={chartDataNivo}
-      margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
-      enableGridX={false}
-      enableGridY={false}
-      enablePointLabel={true}
-      colors={[ '#5B4059' ]}
-      xScale={{ type: 'point' }}
-      yScale={{
-          type: 'linear',
-          min: 'auto',
-          max: 'auto',
-          stacked: true,
-          reverse: false
+      tooltip={ ({ point }) => {
+        console.log('sdsdsd:', point);
+        return (
+          <div className='hourly-chart-tooltip'>
+            <img 
+              style={{
+                width: '50px',
+                height: '50px',
+              }} 
+              src={`https://openweathermap.org/img/wn/${point.data.iconSrc}@2x.png`} 
+              alt={point.data.iconAlt}>
+
+            </img>
+            <div>{point.data.yFormatted  + '°'}</div>
+            <div>{point.data.xFormatted}</div>
+          </div>
+        )
       }}
-      // curve="cardinal"
-      yFormat=" >-.2d"
-      axisTop={null}
-      axisRight={null}
-      axisLeft={null}
-      axisBottom={{
-          orient: 'bottom',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0
-      }}
-      // axisLeft={{
-      //     orient: 'left',
-      //     tickSize: 5,
-      //     tickPadding: 5,
-      //     tickRotation: 0,
-      //     legend: 'Temperature',
-      //     legendOffset: -40,
-      //     legendPosition: 'middle',
-      // }}
-      pointSize={3}
-      pointColor={"#5B4059"}
-      pointBorderWidth={3}
-      pointBorderColor={ "#5B4059" }
-      pointLabelYOffset={-12}
-      useMesh={true}
-      // lineWidth={4}
-      // legends={[
-      //     {
-      //         anchor: 'bottom-right',
-      //         direction: 'column',
-      //         justify: false,
-      //         translateX: 100,
-      //         translateY: 0,
-      //         itemsSpacing: 0,
-      //         itemDirection: 'left-to-right',
-      //         itemWidth: 80,
-      //         itemHeight: 20,
-      //         itemOpacity: 0.75,
-      //         symbolSize: 8,
-      //         symbolShape: 'circle',
-      //         symbolBorderColor: 'rgba(0, 0, 0, .5)',
-      //         effects: [
-      //             {
-      //                 on: 'hover',
-      //                 style: {
-      //                     itemBackground: 'rgba(0, 0, 0, .03)',
-      //                     itemOpacity: 1
-      //                 }
-      //             }
-      //         ]
-      //     }
-      // ]}
+    {...responsiveLineProps}
   />
 
     </div>

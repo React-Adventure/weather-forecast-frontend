@@ -23,6 +23,10 @@
       top: 170px;
     }
   }
+  
+  .hourly-chart-wrap {
+    top: 130px;
+  }
 }
 
 @media screen and (min-width: 500px) {
@@ -34,6 +38,10 @@
     &-togglers {
       top: 74px;
     }
+  }
+
+  .hourly-chart-wrap {
+    top: 34px;
   }
 }
 
