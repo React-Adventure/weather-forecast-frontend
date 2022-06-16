@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { getIconURL } from '../utils/API';
 import { MEASUREMENT_SYSTEM, MEASUREMENT } from './consts';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
 
@@ -12,7 +13,7 @@ const ForecastCard = (props) => {
 
   useEffect(() => {
     if(forecast) {
-      setIconSrc(`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`);
+      setIconSrc(getIconURL(forecast.weather[0].icon));
       setIconAlt(forecast.weather[0].description);
     }
   }, [forecast]);

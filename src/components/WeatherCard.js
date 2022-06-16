@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
 import CityContext from './context/CityContext';
+import { getIconURL } from '../utils/API';
 
 const WeatherCard = (props) => {
   const { weather, cardType } = props;
@@ -14,7 +15,7 @@ const WeatherCard = (props) => {
   let src = '';
   let descr = '';
   if (weather.length !== 0 && cardType === CARD_TYPE.icon) {
-    src = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
+    src = getIconURL(weather.weather[0].icon);
     descr = weather.weather[0].description.toUpperCase();
   }
 
