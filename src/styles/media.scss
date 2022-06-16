@@ -16,7 +16,7 @@
 
   .weather {
     &-forecast-wrap {
-      top: 155px;
+      top: 150px;
     }
 
     &-togglers {
@@ -24,24 +24,22 @@
     }
   }
   
-  .hourly-chart-wrap {
-    top: 130px;
+  .hourly-chart {
+    &-wrap {
+      width: 95% !important;
+    }
   }
 }
 
 @media screen and (min-width: 500px) {
   .weather {
     &-forecast-wrap {
-      top: 54px;
+      top: 50px;
     }
 
     &-togglers {
       top: 74px;
     }
-  }
-
-  .hourly-chart-wrap {
-    top: 34px;
   }
 }
 

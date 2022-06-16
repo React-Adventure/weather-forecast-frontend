@@ -37,6 +37,11 @@
   color: $theme-color;
 }
 
+.weather-forecast-loader {
+  position: relative;
+  top: 50px;
+}
+
 /*----------------- Weather --------------------*/
 
 .weather-wrapper {

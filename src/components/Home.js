@@ -211,16 +211,16 @@ const Home = (props) => {
             <span>Current location</span>
         </div>
       </div>
-      <HourlyChart />
 
       <div className="weather-forecast-wrap">
         {(weatherLoader || currLocationLoader) && 
           <FontAwesomeIcon
-            className="fa-pulse spinner-icon"
+            className="fa-pulse spinner-icon weather-forecast-loader"
             icon={faSpinner} 
             size="5x"
           />
         }
+        <HourlyChart />
         <MeasurementSystemContext.Provider 
           value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
         >

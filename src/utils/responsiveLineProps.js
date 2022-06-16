@@ -1,5 +1,51 @@
 import React from "react";
 
+const CustomPoint = (props) => {
+  const { currentPoint, pointBorderWidth, pointColor } = props;
+  console.log('Chart points props: ', props);
+  // it will show the current point
+  if (currentPoint) {
+    return (
+      <g>
+        <circle
+          fill={pointColor}
+          r={3}
+          strokeWidth={pointBorderWidth + 5}
+          stroke={pointColor}
+          strokeOpacity={0.35}
+          cx={currentPoint.x}
+          cy={currentPoint.y}
+        />
+        {/* <circle
+          r={3}
+          strokeWidth={"4"}
+          stroke={pointColor}
+          fill={pointColor}
+          fillOpacity={0.35}
+          cx={currentPoint.x}
+          cy={currentPoint.y}
+        /> */}
+      </g>
+    );
+  } else {
+    // return (
+    //   <div className='hourly-chart-tooltip'>
+    //     <img 
+    //       style={{
+    //         width: '50px',
+    //         height: '50px',
+    //       }} 
+    //       src={getIconURL(point.data.iconSrc)} 
+    //       alt={point.data.iconAlt}>
+
+    //     </img>
+    //     <div>{point.data.yFormatted  + '°'}</div>
+    //     <div>{point.data.xFormatted}</div>
+    //   </div>
+    // )
+  }
+};
+
 const responsiveLineProps = {
   theme: {
     fontFamily: 'Quicksand',
@@ -25,7 +71,6 @@ const responsiveLineProps = {
       //   color: "#6c516b",
       //   fontSize: 12
       // },
-      enableGridX: false,
       basic: {},
       chip: {},
       table: {},
@@ -65,11 +110,14 @@ const responsiveLineProps = {
   pointBorderWidth: 3,
   pointBorderColor: "#5B4059",
 
-  labelYOffset: -120,
-  labelXOffset: -100,
+  // labelYOffset: -120,
+  // labelXOffset: -100,
 
   useMesh: true,            //-------------------- mesh for mouse events
-  crosshairType: 'bottom',  //-------------------- type for dash lines
+  enableCrosshair: false,
+  //crosshairType: 'bottom',  //-------------------- type for dash lines
+
+  layers: ['grid', 'markers', 'axes', 'areas', 'crosshair', 'lines', CustomPoint, 'slices', 'mesh', 'legends'],
 };
 
 export default responsiveLineProps;
