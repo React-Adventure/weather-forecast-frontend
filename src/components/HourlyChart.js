@@ -14,11 +14,10 @@ const HourlyChart = (props) => {
     setInterval(() => {
       setToday(new Date());
     }, 1000); 
-  }, [today])
+  }, [today]);
 
   useEffect(() => {
     if(hourlyForecast.length !== 0) {
-      console.log('FORECAST: ', hourlyForecast);
       const a = {
         "id": "temp"
       };

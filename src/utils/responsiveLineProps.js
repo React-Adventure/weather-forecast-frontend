@@ -1,49 +1,32 @@
 import React from "react";
 
-const CustomPoint = (props) => {
-  const { currentPoint, pointBorderWidth, pointColor } = props;
+const customPoint = (props) => {
+  const { currentPoint, pointBorderWidth, pointColor, points, enablePointLabel } = props;
   console.log('Chart points props: ', props);
-  // it will show the current point
-  if (currentPoint) {
-    return (
-      <g>
-        <circle
-          fill={pointColor}
-          r={3}
-          strokeWidth={pointBorderWidth + 5}
-          stroke={pointColor}
-          strokeOpacity={0.35}
-          cx={currentPoint.x}
-          cy={currentPoint.y}
-        />
-        {/* <circle
-          r={3}
-          strokeWidth={"4"}
-          stroke={pointColor}
-          fill={pointColor}
-          fillOpacity={0.35}
-          cx={currentPoint.x}
-          cy={currentPoint.y}
-        /> */}
-      </g>
-    );
-  } else {
-    // return (
-    //   <div className='hourly-chart-tooltip'>
-    //     <img 
-    //       style={{
-    //         width: '50px',
-    //         height: '50px',
-    //       }} 
-    //       src={getIconURL(point.data.iconSrc)} 
-    //       alt={point.data.iconAlt}>
 
-    //     </img>
-    //     <div>{point.data.yFormatted  + '°'}</div>
-    //     <div>{point.data.xFormatted}</div>
-    //   </div>
-    // )
-  }
+  return ( points.map((pnt, ind, arr) => { 
+    if(
+      ind % 4 === 0 ||
+      ind === 0 || 
+      ind === (arr.length - 1) ||
+      (currentPoint !== null && pnt === currentPoint)
+    ) {
+      return (
+        <g>
+          <circle
+            enablePointLabel={enablePointLabel}
+            fill={pointColor}
+            r={3}
+            strokeWidth={pointBorderWidth + 5}
+            stroke={pointColor}
+            strokeOpacity={0.35}
+            cx={pnt.x}
+            cy={pnt.y}
+          />
+      </g>
+      )
+    }
+  }));
 };
 
 const responsiveLineProps = {
@@ -117,7 +100,7 @@ const responsiveLineProps = {
   enableCrosshair: false,
   //crosshairType: 'bottom',  //-------------------- type for dash lines
 
-  layers: ['grid', 'markers', 'axes', 'areas', 'crosshair', 'lines', CustomPoint, 'slices', 'mesh', 'legends'],
+  layers: ['grid', 'markers', 'axes', 'areas', 'crosshair', 'lines', customPoint, 'slices', 'mesh', 'legends'],
 };
 
 export default responsiveLineProps;
