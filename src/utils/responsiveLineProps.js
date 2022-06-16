@@ -2,7 +2,7 @@ import React from "react";
 
 const customPoint = (props) => {
   const { currentPoint, pointBorderWidth, pointColor, points, enablePointLabel } = props;
-  console.log('Chart points props: ', props);
+  // console.log('Chart points props: ', props);
 
   return ( points.map((pnt, ind, arr) => { 
     if(
@@ -12,9 +12,8 @@ const customPoint = (props) => {
       (currentPoint !== null && pnt === currentPoint)
     ) {
       return (
-        <g>
+        <g key={`${pnt.x} ${pnt.y}`}>
           <circle
-            enablePointLabel={enablePointLabel}
             fill={pointColor}
             r={3}
             strokeWidth={pointBorderWidth + 5}
