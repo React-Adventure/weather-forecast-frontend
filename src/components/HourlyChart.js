@@ -6,9 +6,21 @@ import responsiveLineProps from '../utils/responsiveLineProps';
 import { getIconURL } from '../utils/API';
 
 const HourlyChart = (props) => {
-  const { hourlyForecast } = props;
+  const { hourlyForecast, weather } = props;
   const [chartDataNivo, setChartDataNivo] = useState([]);
   const [today, setToday] = useState(new Date());
+  const [chartSunset, setchartSunset] = useState(new Date(weather.sunset * 1000));
+  const [chartSunrise, setchartSunrise] = useState(new Date(weather.sunrise * 1000));
+
+  const getSunTime = () => {
+    if(chartSunset.getTime() < (new Date(hourlyForecast[0].dt)).getTime()) {
+      setchartSunset(new Date(dailyForecast[1].sunset * 1000));
+    }
+    
+    if(chartSunrise.getTime() > (new Date(hourlyForecast[23].dt)).getTime()) {
+      setchartSunrise(new Date(dailyForecast[1].sunset * 1000));
+    }
+  };
 
   useEffect(() => {
     setInterval(() => {
@@ -24,11 +36,7 @@ const HourlyChart = (props) => {
   
       const data = hourlyForecast.slice(0,24).map((elem, ind) => {
         return {
-          x: (new Date(elem.dt * 1000))
-              .toLocaleTimeString ('en-US', {
-                  hour: 'numeric',
-                  hour12: true
-              }),
+          x: (new Date(elem.dt * 1000)),
           y: elem.temp,
           iconSrc: elem.weather[0].icon,
           iconAlt: elem.weather[0].description
@@ -56,7 +64,6 @@ const HourlyChart = (props) => {
         <ResponsiveLine
           data={chartDataNivo}
           tooltip={ ({ point }) => {
-            // console.log('Chart point:', point);
             return (
               <div className='hourly-chart-tooltip'>
                 <img 
@@ -73,6 +80,40 @@ const HourlyChart = (props) => {
               </div>
             )
           }}
+          markers={[
+            {
+              axis: 'x',
+              value: new Date(weather.sunset * 1000),
+              lineStyle: { 
+                stroke: '#FF6347', 
+                strokeWidth: 1, 
+              },
+              legend: `Sunset ${new Date(weather.sunset * 1000).toLocaleTimeString()}`,
+              legendOffsetX: -40,
+              legendOffsetY: -20,
+              textStyle: {
+                fill: '#6c516b',
+                fontSize: 10,
+              }
+            },
+            {
+              axis: 'x',
+              value:  new Date(weather.sunrise * 1000),
+              lineStyle: { 
+                stroke: '#FFD700', 
+                strokeWidth: 1, 
+                fontFamily: 'Quicksand'
+              }, 
+              legend: `Sunrise ${new Date(weather.sunrise * 1000).toLocaleTimeString()}`,
+              legendPosition: 'top-right',
+              legendOffsetX: -40,
+              legendOffsetY: -20,
+              textStyle: {
+                fill: '#6c516b',
+                fontSize: 10,
+                }
+            },
+          ]}
           {...responsiveLineProps}
         />
       </div>
@@ -83,7 +124,8 @@ const HourlyChart = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    hourlyForecast: state.weatherData.hourlyForecast
+    hourlyForecast: state.weatherData.hourlyForecast,
+    weather: state.weatherData.weather,
   }
 }
 
