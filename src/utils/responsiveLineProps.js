@@ -1,35 +1,54 @@
 import React from "react";
+import { DotsItem } from '@nivo/core';
 
 const customPoint = (props) => {
-  const { currentPoint, pointBorderWidth, pointColor, points, enablePointLabel } = props;
-  // console.log('Chart points props: ', props);
+  debugger
+  const { currentPoint, pointBorderWidth, pointColor, points, pointSize, pointSymbol, pointLabelYOffset } = props;
+  console.log('Chart points props: ', props);
 
-  return ( points.map((pnt, ind, arr) => { 
+  return (points.map((point, ind, arr) => { 
+    let dotShadow = null;
+
     if(
       ind % 4 === 0 ||
       ind === 0 || 
       ind === (arr.length - 1) ||
-      (currentPoint !== null && pnt === currentPoint)
+      (currentPoint !== null && point === currentPoint)
     ) {
-      return (
-        <g key={`${pnt.x} ${pnt.y}`}>
-          <circle
-            fill={pointColor}
-            r={3}
-            strokeWidth={pointBorderWidth + 5}
-            stroke={pointColor}
-            strokeOpacity={0.35}
-            cx={pnt.x}
-            cy={pnt.y}
-          />
-      </g>
-      )
+      dotShadow = 
+        <circle 
+          fill={pointColor} 
+          r={3} 
+          strokeWidth={pointBorderWidth + 5} 
+          stroke={pointColor} 
+          strokeOpacity={0.35} 
+          cx={point.x}
+          cy={point.y}
+        />;
     }
+    
+    return (
+      <g key={point.id}>
+        {dotShadow}
+        <DotsItem
+          key={point.id}
+          x={point.x}
+          y={point.y}
+          datum={point.data}
+          symbol={pointSymbol}
+          size={pointSize}
+          color={point.color}
+          borderWidth={pointBorderWidth}
+          borderColor={pointColor}
+          label={dotShadow ? point.data.yFormatted : null}
+          labelYOffset={pointLabelYOffset}
+        />
+    </g>
+    )
   }));
 };
 
 const responsiveLineProps = {
-  // enablePointLabel: true,
   theme: {
     fontFamily: 'Quicksand',
     fontSize: 10,
@@ -45,6 +64,7 @@ const responsiveLineProps = {
       }
     },
   },
+
   margin: { top: 50, right: 20, bottom: 50, left: 20 },
   colors: [ '#5B4059' ],
   
@@ -56,7 +76,7 @@ const responsiveLineProps = {
     format: "%I:%M:%S %p",
     precision: "hour", 
   },
-  xFormat: "time:%I %p %d %a",
+  xFormat: "time:%I %p, %d %a",
   yScale:{
       type: 'linear',
       min: 'auto',
@@ -75,6 +95,7 @@ const responsiveLineProps = {
       format: '%I %p',
       tickPadding: 5,
   },
+
   pointSize: 3,
   pointColor: "#5B4059",
   pointBorderWidth: 3,
@@ -87,7 +108,7 @@ const responsiveLineProps = {
   //crosshairType: 'bottom',  //-------------------- type for dash lines
   enableSlices: false,
 
-  layers: ['grid', 'markers', 'axes', 'areas', 'crosshair', 'lines', 'points', customPoint, 'slices', 'mesh', 'legends'],
+  layers: ['grid', 'markers', 'axes', 'areas', 'crosshair', 'lines', customPoint, 'slices', 'mesh', 'legends'],
 };
 
 export default responsiveLineProps;
