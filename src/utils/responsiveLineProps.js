@@ -2,9 +2,8 @@ import React from "react";
 import { DotsItem } from '@nivo/core';
 
 const customPoint = (props) => {
-  debugger
   const { currentPoint, pointBorderWidth, pointColor, points, pointSize, pointSymbol, pointLabelYOffset } = props;
-  console.log('Chart points props: ', props);
+  //console.log('Chart points props: ', props);
 
   return (points.map((point, ind, arr) => { 
     let dotShadow = null;
