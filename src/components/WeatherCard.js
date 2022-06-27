@@ -6,9 +6,10 @@ import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
 import CityContext from './context/CityContext';
 import { getIconURL } from '../utils/API';
+import classNames from 'classnames';
 
 const WeatherCard = (props) => {
-  const { weather, cardType } = props;
+  const { weather, cardType, currCard } = props;
   const { measureSystem } = useContext(MeasurementSystemContext);
   const { cityAndParams } = useContext(CityContext);
 
@@ -114,13 +115,13 @@ const WeatherCard = (props) => {
       
   return (
     cardType === CARD_TYPE.icon ? 
-      <div className=" row weather-card weather-icon">
+      <div className={classNames("row weather-card weather-icon", {'not-curr-item': !currCard  })}>
         <h5 className="f-w-600" style={{margin: 0}}>{cityAndParams.name}</h5>
         <img src={src}></img>
         <span className="f-w-600">{descr}</span>
       </div> 
     :
-    <div className="row">
+    <div className={classNames("row", { 'not-curr-item': !currCard })}>
       <div className="col s12">
         <div className="card weather-card">
             {cardOptions.title !== CARD_TYPE.temperature && 
