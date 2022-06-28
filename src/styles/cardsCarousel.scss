@@ -2,14 +2,9 @@
 
 .cards-carousel {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-
-  width: 100%;
-  height: 100%;
-
-  background-color: aqua;
 }
 
 .not-curr-item {
@@ -27,12 +22,28 @@
   &:active {
     color: $theme-blue-color !important;
   }
+}
 
-  &-left {
+.carousel-dots {
+  flex: 0 1 100%;
 
+  display: flex;
+  justify-content: center;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 2px;
+
+  background-color: $theme-color;
+  border-radius: 50%;
+
+  &, &:focus {
+    color: $theme-color;
   }
 
-  &-right {
-
+  &:active {
+    color: $theme-blue-color !important;
   }
 }

@@ -30,6 +30,8 @@
 }
 
 .today-weather-title {
+  flex: 0 1 100%;
+
   margin: 0;
   margin-top: 20px;
 
@@ -81,13 +83,13 @@
   }
 
   &-icon {
-    flex: 0 1 100%;
+    // flex: 0 1 100%;
     // order: -1;
-    margin-bottom: 0;
+    margin-top: 35px;
+    margin-bottom: 30px;
+    padding-top: 30px;
 
-    height: 200px;
-
-    background: transparent !important;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
   }
 
   &-togglers {
@@ -116,6 +118,10 @@
 
 /*----------------- Forecast --------------------*/
 .forecast {
+  &-cards-wrap {
+    flex: 0 1 100%;
+  }
+
   &-card {
     justify-content: center;
 
@@ -131,6 +137,7 @@
 
 .weekly-forecast-title {
   flex: 0 1 100%;
+  margin-top: 50px;
 
   color: $theme-color;
   text-align: center;

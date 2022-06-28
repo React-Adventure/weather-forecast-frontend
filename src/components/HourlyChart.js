@@ -47,12 +47,6 @@ const HourlyChart = (props) => {
     }
   }, [hourlyForecast]);
 
-  //----------------------------------------------------
-  useEffect(() => {
-    console.log('Chart data:', chartDataNivo);
-  }, [chartDataNivo])
-  //----------------------------------------------------
-
   return (
     hourlyForecast.length !== 0 && 
     <div className="hourly-chart-wrap">

@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   weather: [],
-  weatherLoader: false,
+  weatherLoader: true,
   dailyForecast: [],
   hourlyForecast: []
 }

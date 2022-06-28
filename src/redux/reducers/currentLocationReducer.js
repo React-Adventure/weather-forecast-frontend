@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   currLocation: {},
-  currLocationLoader: false,
+  currLocationLoader: true,
 }
 
 export const currentLocationReducer = (state = initialState, action) => {

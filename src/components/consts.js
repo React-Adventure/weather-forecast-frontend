@@ -1,9 +1,9 @@
 
 export const CARD_TYPE = {
+  icon: 'Icon',
   temperature: 'Temperature',
   wind: 'Wind',
   extra: 'Extra Options',
-  icon: 'Icon'
 };
 
 export const MEASUREMENT_SYSTEM = {

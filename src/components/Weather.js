@@ -1,30 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CARD_TYPE } from './consts';
 import WeatherCard from './WeatherCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-// import { Carousel } from 'react-responsive-carousel';
 
-import { Carousel } from 'react-materialize';
-import M from "materialize-css";
+const ARROW_DIRECTION = {
+  L: 'left',
+  R: 'right',
+  N: 'none'
+};
 
 const Weather = () => {
-  const [currCard, setCurrCard] = useState(true);
-//   document.addEventListener('DOMContentLoaded', function() {
-//     // Initialising mterialise-css functions
-//     var elemsCarousel = document.querySelectorAll('.carousel');
-//     M.Carousel.init(elemsCarousel);
+  const [currCard, setCurrCard] = useState(CARD_TYPE.icon);
+  const arrow = useRef(ARROW_DIRECTION.N);
+  console.log(arrow);
 
-//     M.Carousel.getInstance(elemsCarousel).set(2);
+  const arrowsClick = () => {
+    const cardsArr = Object.keys(CARD_TYPE);
+    const currItemIndex = cardsArr.findIndex(item => CARD_TYPE[item] === currCard);
 
-//     window.setInterval(function () {
-//         M.Carousel.getInstance(elemsCarousel).next()
-//     }, 2000)
-// });
+    switch(arrow.current) {
+      case 'left': {
+        cardsArr[currItemIndex - 1] !== undefined ? setCurrCard(CARD_TYPE[cardsArr[currItemIndex - 1]]) : setCurrCard(CARD_TYPE[cardsArr[cardsArr.length - 1]]);
+
+        break;
+      }
+      case 'right': {
+        cardsArr[currItemIndex + 1] !== undefined ? setCurrCard(CARD_TYPE[cardsArr[currItemIndex + 1]]) : setCurrCard(CARD_TYPE[cardsArr[0]]);
+
+        break;
+      }
+      default: break;
+    }
+  };
 
   return <div className="weather-cards-wrap">
     <div className="cards-carousel">
-      <div className="carousel-arrow carousel-arrow-left">
+      <div className="carousel-arrow carousel-arrow-left" onClick={() => {
+        arrow.current = ARROW_DIRECTION.L;
+        arrowsClick();
+      }}>
         <FontAwesomeIcon 
           className="fa-solid" 
           icon={faAngleLeft} 
@@ -39,12 +54,22 @@ const Weather = () => {
           );
         })
       }
-      <div className="carousel-arrow carousel-arrow-right">
+      <div className="carousel-arrow carousel-arrow-right" onClick={() => {
+        arrow.current = ARROW_DIRECTION.R;
+        arrowsClick();
+      }}>
         <FontAwesomeIcon 
           className="fa-solid" 
           icon={faAngleRight} 
           size={"lg"}
         />
+      </div>
+      <div className="carousel-dots">
+        {Object.keys(CARD_TYPE).map(() => {
+          return (
+            <p className="dot"></p>
+          )
+        })}
       </div>
     </div>
   </div>

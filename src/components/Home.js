@@ -220,17 +220,24 @@ const Home = (props) => {
             size="5x"
           />
         }
+        {weather.length !== 0 && 
+          <h4 className="today-weather-title">
+            {(new Date(weather.dt * 1000))
+              .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+            }
+          </h4>
+        }
         <HourlyChart />
         <MeasurementSystemContext.Provider 
           value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
         >
           {weather.length !== 0 && 
             <> 
-              <h4 className="today-weather-title">
+              {/* <h4 className="today-weather-title">
                 {(new Date(weather.dt * 1000))
                   .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
                 }
-              </h4>
+              </h4> */}
               <CityContext.Provider value={{cityAndParams}}>
                 <div className="today-forecast">
                   <Weather /> 

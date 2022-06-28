@@ -46,9 +46,15 @@ h1 {
   font-weight: 600;
 }
 
+.h200-w250 {
+  height: 200px;
+  width: 250px;
+}
+
 .weather-forecast-wrap {
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 
