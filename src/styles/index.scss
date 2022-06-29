@@ -80,6 +80,11 @@ h1 {
   align-items: center;
 }
 
+.today-forecast, 
+.hourly-chart-wrap {
+  margin-bottom: 50px;
+}
+
 /*----------------- Materialaze CSS modified styles --------------------*/
 .switch label input[type=checkbox]:checked + .lever:after {
   background-color: $theme-color;
