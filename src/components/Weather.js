@@ -38,35 +38,43 @@ const Weather = () => {
     setCurrCard(CARD_TYPE[event.target.id]);
   };
 
-  return <div className="weather-cards-wrap">
-    <div className="cards-carousel">
-      <div className="carousel-arrow carousel-arrow-left" onClick={() => {
-        arrow.current = ARROW_DIRECTION.L;
-        arrowsClick();
-      }}>
-        <FontAwesomeIcon 
-          className="fa-solid" 
-          icon={faAngleLeft} 
-          size={"lg"}
-        />
-      </div>
-      {Object.keys(CARD_TYPE).map((key) => {
-          return (
-            <WeatherCard 
-              key={CARD_TYPE[key]} cardType={CARD_TYPE[key]} currCard={currCard}
-            ></WeatherCard>
-          );
-        })
-      }
-      <div className="carousel-arrow carousel-arrow-right" onClick={() => {
-        arrow.current = ARROW_DIRECTION.R;
-        arrowsClick();
-      }}>
-        <FontAwesomeIcon 
-          className="fa-solid" 
-          icon={faAngleRight} 
-          size={"lg"}
-        />
+  return (
+    <div className="weather-cards-carousel">
+      <div className="carousel-row">
+        <div 
+          className="carousel-arrow carousel-arrow-left" 
+          onClick={() => {
+          arrow.current = ARROW_DIRECTION.L;
+          arrowsClick();
+          }}
+        >
+          <FontAwesomeIcon 
+            className="fa-solid" 
+            icon={faAngleLeft} 
+            size={"lg"}
+          />
+        </div>
+        {Object.keys(CARD_TYPE).map((key) => {
+            return (
+              <WeatherCard 
+                key={CARD_TYPE[key]} cardType={CARD_TYPE[key]} currCard={currCard}
+              ></WeatherCard>
+            );
+          })
+        }
+        <div 
+          className="carousel-arrow carousel-arrow-right" 
+          onClick={() => {
+            arrow.current = ARROW_DIRECTION.R;
+            arrowsClick();
+          }}
+        >
+          <FontAwesomeIcon 
+            className="fa-solid" 
+            icon={faAngleRight} 
+            size={"lg"}
+          />
+        </div>
       </div>
       <div className="carousel-dots">
         {Object.keys(CARD_TYPE).map((item) => {
@@ -84,7 +92,7 @@ const Weather = () => {
         })}
       </div>
     </div>
-  </div>
+  )
 };
 
 export default Weather;

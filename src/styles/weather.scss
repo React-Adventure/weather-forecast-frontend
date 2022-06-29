@@ -3,13 +3,6 @@
 /*----------------- Forecast & weather --------------------*/
 .forecast,
 .weather {
-  &-cards-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-
   &-card {
     display: flex;
     flex-direction: column;
@@ -18,8 +11,7 @@
     background: $cards-bg !important; 
   }
 
-  &-card,
-  &-cards-wrap {
+  &-card {
     border-radius: 10px;
     color: $theme-color;
   }
@@ -117,6 +109,16 @@
 .forecast {
   &-cards-wrap {
     flex: 0 1 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 50px;
+
+    border-radius: 10px;
+    color: $theme-color;
   }
 
   &-card {
@@ -134,7 +136,7 @@
 
 .weekly-forecast-title {
   flex: 0 1 100%;
-  margin-top: 50px;
+  // margin-top: 50px;
 
   color: $theme-color;
   text-align: center;

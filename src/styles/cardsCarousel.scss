@@ -1,8 +1,8 @@
 @import './variables.scss';
 
-.cards-carousel {
+.weather-cards-carousel {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -13,22 +13,28 @@
   display: none;
 }
 
-.carousel-arrow {
-  margin: 20px;
-  cursor: pointer;
-
-  &, &:focus {
-    color: $theme-color;
+.carousel {
+  &-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  &:active {
-    color: $theme-blue-color !important;
+  &-arrow {
+    margin: 20px;
+    cursor: pointer;
+
+    &, &:focus {
+      color: $theme-color;
+    }
+
+    &:active {
+      color: $theme-blue-color !important;
+    }
   }
 }
 
 .carousel-dots {
-  flex: 0 1 100%;
-
   display: flex;
   justify-content: center;
 }
