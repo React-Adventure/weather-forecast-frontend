@@ -114,22 +114,29 @@ const WeatherCard = (props) => {
   }, [cardType, weather, cardProps]);
       
   return (
-    cardType === CARD_TYPE.icon ? 
-      <div className={classNames("row weather-card weather-icon h200-w250", {'not-curr-item': cardType !== currCard  })}>
-        <h5 className="f-w-600" style={{margin: 0}}>{cityAndParams.name}</h5>
-        <img src={src}></img>
-        <span className="f-w-600">{descr}</span>
-      </div> 
-    :
-    <div className={classNames("row", { 'not-curr-item': cardType !== currCard })}>
+      <div className={classNames("row m-0", { 'not-curr-item': cardType !== currCard })}>
       <div className="col s12">
         <div className="card weather-card">
-            {cardOptions.title !== CARD_TYPE.temperature && 
-              <span className="card-title center">{cardOptions.title}</span>
-            }
-          <div className="card-content">
-            {cardOptions.opts.map(info => info)}
-          </div>
+          {cardType === CARD_TYPE.icon ?
+            <>
+              <span className="card-title center">{cityAndParams.name}</span>
+              <div className="card-content weather-icon">
+                <img src={src}></img>
+                <span className="f-w-600">{descr}</span>
+              </div>
+            </>
+            : 
+            <>
+              {cardOptions.title !== CARD_TYPE.temperature && 
+                <span className="card-title center">
+                  {cardOptions.title}
+                </span>
+              }
+              <div className="card-content">
+                {cardOptions.opts.map(info => info)}
+              </div>
+            </> 
+          }
         </div>
       </div>
     </div>

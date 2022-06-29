@@ -3,6 +3,7 @@ import { CARD_TYPE } from './consts';
 import WeatherCard from './WeatherCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
 
 const ARROW_DIRECTION = {
   L: 'left',
@@ -13,7 +14,6 @@ const ARROW_DIRECTION = {
 const Weather = () => {
   const [currCard, setCurrCard] = useState(CARD_TYPE.icon);
   const arrow = useRef(ARROW_DIRECTION.N);
-  console.log(arrow);
 
   const arrowsClick = () => {
     const cardsArr = Object.keys(CARD_TYPE);
@@ -32,6 +32,10 @@ const Weather = () => {
       }
       default: break;
     }
+  };
+
+  const dotClick = (event) => {
+    setCurrCard(CARD_TYPE[event.target.id]);
   };
 
   return <div className="weather-cards-wrap">
@@ -65,9 +69,17 @@ const Weather = () => {
         />
       </div>
       <div className="carousel-dots">
-        {Object.keys(CARD_TYPE).map(() => {
+        {Object.keys(CARD_TYPE).map((item) => {
           return (
-            <p className="dot"></p>
+            <p 
+              key={item} 
+              id={item}
+              className={classNames("dot", {
+                'active-dot': CARD_TYPE[item] === currCard })
+              }
+              onClick={dotClick}
+            >    
+            </p>
           )
         })}
       </div>

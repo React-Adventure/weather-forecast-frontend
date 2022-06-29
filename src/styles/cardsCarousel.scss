@@ -5,6 +5,8 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
+  height: 250px;
 }
 
 .not-curr-item {
@@ -32,18 +34,21 @@
 }
 
 .dot {
-  height: 10px;
-  width: 10px;
+  height: 20px;
+  width: 20px;
   margin: 2px;
 
-  background-color: $theme-color;
   border-radius: 50%;
+  border: 2px solid $theme-color;
 
-  &, &:focus {
-    color: $theme-color;
-  }
+  background-color: $cards-bg;
+  cursor: pointer;
 
-  &:active {
-    color: $theme-blue-color !important;
+  &:active, &:focus {
+    background-color: $theme-color;
   }
+}
+
+.active-dot {
+  background-color: $theme-color;
 }
