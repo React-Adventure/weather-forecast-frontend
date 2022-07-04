@@ -16,7 +16,7 @@ const DigitalClock = () => {
   }, []);
 
   return (
-    <span className="w-145">
+    <span className="w-150">
       {today.toLocaleString()}
     </span>
   );

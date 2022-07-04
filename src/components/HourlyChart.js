@@ -45,7 +45,7 @@ const HourlyChart = (props) => {
     hourlyForecast.length !== 0 && 
     <div className="hourly-chart-wrap">
       <div className="hourly-chart-title">
-        <h5>Today</h5>
+        <h6>Today</h6>
         <DigitalClock />
       </div>
       <div className="hourly-chart">
