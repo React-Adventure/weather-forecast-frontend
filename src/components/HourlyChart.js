@@ -4,11 +4,11 @@ import { ResponsiveLine } from '@nivo/line';
 import {} from '@nivo/annotations';
 import responsiveLineProps from '../utils/responsiveLineProps';
 import { getIconURL } from '../utils/API';
+import DigitalClock from './DigitalClock';
 
 const HourlyChart = (props) => {
   const { hourlyForecast, weather } = props;
   const [chartDataNivo, setChartDataNivo] = useState([]);
-  const [today, setToday] = useState(new Date());
   const [chartSunset, setchartSunset] = useState(new Date(weather.sunset * 1000));
   const [chartSunrise, setchartSunrise] = useState(new Date(weather.sunrise * 1000));
 
@@ -21,12 +21,6 @@ const HourlyChart = (props) => {
       setchartSunrise(new Date(dailyForecast[1].sunset * 1000));
     }
   };
-
-  useEffect(() => {
-    setInterval(() => {
-      setToday(new Date());
-    }, 1000); 
-  }, [today]);
 
   useEffect(() => {
     if(hourlyForecast.length !== 0) {
@@ -51,8 +45,8 @@ const HourlyChart = (props) => {
     hourlyForecast.length !== 0 && 
     <div className="hourly-chart-wrap">
       <div className="hourly-chart-title">
-        <h6>Today</h6>
-        <span>{today.toLocaleString()}</span>
+        <h5>Today</h5>
+        <DigitalClock />
       </div>
       <div className="hourly-chart">
         <ResponsiveLine

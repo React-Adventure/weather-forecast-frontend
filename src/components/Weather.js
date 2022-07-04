@@ -95,4 +95,4 @@ const Weather = () => {
   )
 };
 
-export default Weather;
+export default React.memo(Weather);

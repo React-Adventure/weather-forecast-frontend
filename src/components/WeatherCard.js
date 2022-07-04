@@ -26,13 +26,13 @@ const WeatherCard = (props) => {
       case CARD_TYPE.temperature: {
         return { ...title,
           opts: [
-            <p className="weather-card-opts justify-content-center">
+            <p key={1} className="weather-card-opts justify-content-center">
               <span className="weather-card-temperature">
                 {Math.round(data?.temp)}&#xb0;
                 <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.temp : MEASUREMENT.metric.temp}</span>
               </span>
             </p>,
-            <p className="weather-card-opts">
+            <p key={2} className="weather-card-opts">
               <span>Feels like:</span>
               <span>
                 {Math.round(data?.feels_like)}&#xb0;
@@ -45,7 +45,7 @@ const WeatherCard = (props) => {
       case CARD_TYPE.wind:
         return { ...title,
           opts: [
-            <p className="weather-card-opts justify-content-center">
+            <p  key={3} className="weather-card-opts justify-content-center">
               <FontAwesomeIcon
                 className="wind-direction fa-rotate-by"
                 icon={faArrowRightLong} 
@@ -53,14 +53,14 @@ const WeatherCard = (props) => {
                 size="3x"
               />
             </p>,
-            <p className="weather-card-opts">
+            <p key={4} className="weather-card-opts">
               <span>Speed:</span>
               <span>
                 {data?.wind_speed}
                 <span className="weather-card-measure">{measureSystem === MEASUREMENT_SYSTEM.imperial ? MEASUREMENT.imperial.windSpeed : MEASUREMENT.metric.windSpeed}</span>
               </span>
             </p>,
-            <p className="weather-card-opts">
+            <p key={5} className="weather-card-opts">
               <span>Gust:</span>
               <span>
                 { weather?.wind_gust || '-' }
@@ -72,28 +72,28 @@ const WeatherCard = (props) => {
       case CARD_TYPE.extra:
         return { ...title,
           opts: [
-            <p className="weather-card-opts">
+            <p key={6} className="weather-card-opts">
                 <span>Pressure:</span>
                 <span>
                   {data?.pressure}
                   <span className="weather-card-measure">hPa</span>
                 </span>
             </p>,
-            <p className="weather-card-opts">
+            <p key={7} className="weather-card-opts">
               <span>Humidity:</span>
               <span>
                 {data?.humidity}
                 <span className="weather-card-measure">%</span>
               </span>
             </p>,
-            <p className="weather-card-opts">
+            <p key={8} className="weather-card-opts">
               <span>Clouds:</span>
               <span>
                 {data?.clouds}
                 <span className="weather-card-measure">%</span>
               </span>
             </p>,
-            <p className="weather-card-opts">
+            <p key={9} className="weather-card-opts">
               <span>Precipitation:</span>
               <span>
                 {data?.rain?.['3h'] || data?.snow?.['3h'] || '-'}
@@ -121,7 +121,7 @@ const WeatherCard = (props) => {
             <>
               <span className="card-title center">{cityAndParams.name}</span>
               <div className="card-content weather-icon">
-                <img src={src}></img>
+                <img src={src} alt={descr}></img>
                 <span className="f-w-600">{descr}</span>
               </div>
             </>

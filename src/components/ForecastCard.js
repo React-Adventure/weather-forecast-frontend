@@ -38,4 +38,4 @@ const ForecastCard = (props) => {
   );
 };
 
-export default ForecastCard;
+export default React.memo(ForecastCard);

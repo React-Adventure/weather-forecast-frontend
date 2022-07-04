@@ -232,12 +232,7 @@ const Home = (props) => {
           value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
         >
           {weather.length !== 0 && 
-            <> 
-              {/* <h4 className="today-weather-title">
-                {(new Date(weather.dt * 1000))
-                  .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
-                }
-              </h4> */}
+            <>
               <CityContext.Provider value={{cityAndParams}}>
                 <div className="today-forecast">
                   <Weather /> 
