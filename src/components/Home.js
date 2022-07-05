@@ -1,21 +1,28 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
+import loadable from '@loadable/component'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySearch';
 import { fetchCurrentWeather } from '../redux/actions/currentWeater';
-import Weather from './Weather';
-import Forecast from './Forecast';
-import CitiesList from './CitiesList';
+// import Weather from './Weather';
+const Weather = loadable(() => import('./Weather'));
+const CitiesList = loadable(() => import('./CitiesList'));
+const Forecast = loadable(() => import('./Forecast'));
+const HourlyChart = loadable(() => import('./HourlyChart'));
+
+// import Forecast from './Forecast';
+// import CitiesList from './CitiesList';
 import { MEASUREMENT_SYSTEM } from './consts';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
 import CityContext from './context/CityContext';
 import { geolocated } from "react-geolocated";
 import { fetchCurrentGeoWeather } from '../redux/actions/currentLocation';
-import HourlyChart from './HourlyChart';
+// import HourlyChart from './HourlyChart';
 
 const Home = (props) => {
+  console.log('HOME RENDERED');
   const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI, currentLocation, currLocationLoader } = props;
   const { weather, fetchCurrentWeather, weatherLoader, fetchCurrentGeoWeather } = props;
 
@@ -29,6 +36,23 @@ const Home = (props) => {
     return (togglerChecked !== undefined && togglerChecked !== null) ? JSON.parse(togglerChecked) : false;
   });
   const [currLocationToggler, setCurrLocationToggler] = useState(true);
+
+  // useEffect(() => {
+  //   function handleScrollYChange() {
+  //   const lastScrollY = window.scrollY;
+  //   console.log(lastScrollY);
+  //           if (lastScrollY) {
+  //               localStorage.setItem("scrollY", lastScrollY);
+  //               window.scrollTo(0, lastScrollY);
+  //           }
+  //       }
+  //       window.addEventListener("scroll", handleScrollYChange, true);
+  //       return () => {
+  //           window.removeEventListener("scroll", handleScrollYChange);
+  //       };
+  //   }, []);
+
+  //   const [scrl, setScrt] = useState();
 
 
   useEffect(() => {
