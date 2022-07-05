@@ -121,7 +121,7 @@ const WeatherCard = (props) => {
             <>
               <span className="card-title center">{cityAndParams.name}</span>
               <div className="card-content weather-icon">
-                <img src={src} alt={descr}></img>
+                <img className="w-h-100" src={src} alt={descr}></img>
                 <span className="f-w-600">{descr}</span>
               </div>
             </>

@@ -55,10 +55,7 @@ const HourlyChart = (props) => {
             return (
               <div className='hourly-chart-tooltip'>
                 <img 
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                  }} 
+                  className="w-h-50px"
                   src={getIconURL(point.data.iconSrc)} 
                   alt={point.data.iconAlt}>
 
