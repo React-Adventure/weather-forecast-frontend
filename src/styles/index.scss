@@ -3,6 +3,9 @@
 @import './media.scss';
 @import './searchBar.scss';
 @import './weather.scss';
+@import './weatherChart.scss';
+@import './cardsCarousel.scss';
+
 
 //********************* COMMON STYLES *********************
 
@@ -10,7 +13,7 @@ body {
   box-sizing: border-box;
   font-family: 'Quicksand';
 
-  background: url(../backgrounds/sky.png) no-repeat center center fixed;
+  background: url(../backgrounds/sky.webp) no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -35,26 +38,65 @@ h1 {
   justify-content: center;
 }
 
+.theme-text-color {
+  color: $theme-color;
+}
 
 .f-w-600 {
   font-weight: 600;
 }
 
+.h200-w250 {
+  height: 200px;
+  width: 250px;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.w-150 {
+  width: 150px;
+}
+
+.w-h-100 {
+  width: 100px;
+  height: 100px;
+}
+
+.w-h-50px {
+  width: 50px;
+  height: 50px;
+}
+
 .weather-forecast-wrap {
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 
   position: relative;
   z-index: 1;
 
-  width: 80%;
+  width: 90%;
   margin: 20px 0;
 }
 
 .current-location {
   color: $theme-color;
+}
+
+.today-forecast {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.today-forecast, 
+.hourly-chart-wrap {
+  margin-bottom: 50px;
 }
 
 /*----------------- Materialaze CSS modified styles --------------------*/
@@ -71,7 +113,7 @@ h1 {
 }
 
 .row {
-  margin-top: 20px;
+  margin: 20px;
 }
 
 .card-content {

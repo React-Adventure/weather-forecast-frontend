@@ -1,21 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import _ from 'lodash';
+import { debounce as _debounce } from 'lodash';
+import loadable from '@loadable/component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { fetchSearchCities, cleanSearchResults } from '../redux/actions/citySearch';
 import { fetchCurrentWeather } from '../redux/actions/currentWeater';
-import Weather from './Weather';
-import Forecast from './Forecast';
-import CitiesList from './CitiesList';
 import { MEASUREMENT_SYSTEM } from './consts';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
 import CityContext from './context/CityContext';
 import { geolocated } from "react-geolocated";
 import { fetchCurrentGeoWeather } from '../redux/actions/currentLocation';
 
+const Weather = loadable(() => import('./Weather'));
+const CitiesList = loadable(() => import('./CitiesList'));
+const Forecast = loadable(() => import('./Forecast'));
+const HourlyChart = loadable(() => import('./HourlyChart'));
+
 const Home = (props) => {
-  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, citiesAPI, currentLocation, currLocationLoader } = props;
+  const { fetchSearchCities, cities, cleanSearchResults, citiesLoader, currentLocation, currLocationLoader } = props;
   const { weather, fetchCurrentWeather, weatherLoader, fetchCurrentGeoWeather } = props;
 
   const [citySearch, setCitySearch] = useState('');
@@ -28,6 +31,23 @@ const Home = (props) => {
     return (togglerChecked !== undefined && togglerChecked !== null) ? JSON.parse(togglerChecked) : false;
   });
   const [currLocationToggler, setCurrLocationToggler] = useState(true);
+
+  // useEffect(() => {
+  //   function handleScrollYChange() {
+  //   const lastScrollY = window.scrollY;
+  //   console.log(lastScrollY);
+  //           if (lastScrollY) {
+  //               localStorage.setItem("scrollY", lastScrollY);
+  //               window.scrollTo(0, lastScrollY);
+  //           }
+  //       }
+  //       window.addEventListener("scroll", handleScrollYChange, true);
+  //       return () => {
+  //           window.removeEventListener("scroll", handleScrollYChange);
+  //       };
+  //   }, []);
+
+  //   const [scrl, setScrt] = useState();
 
 
   useEffect(() => {
@@ -59,7 +79,7 @@ const Home = (props) => {
   };
 
   const debounceSearch = useCallback(
-    _.debounce(citySearch => {
+    _debounce(citySearch => {
         if(citySearch) {
           fetchSearchCities(citySearch);
         } else {
@@ -214,23 +234,28 @@ const Home = (props) => {
       <div className="weather-forecast-wrap">
         {(weatherLoader || currLocationLoader) && 
           <FontAwesomeIcon
-            className="fa-pulse spinner-icon"
+            className="fa-pulse spinner-icon weather-forecast-loader"
             icon={faSpinner} 
             size="5x"
           />
         }
+        {weather.length !== 0 && 
+          <h4 className="today-weather-title">
+            {(new Date(weather.dt * 1000))
+              .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+            }
+          </h4>
+        }
+        <HourlyChart />
         <MeasurementSystemContext.Provider 
           value={{ measureSystem: measureTogglerChecked ? MEASUREMENT_SYSTEM.imperial : MEASUREMENT_SYSTEM.metric}}
         >
           {weather.length !== 0 && 
-            <> 
-              <h4 className="today-weather-title">
-                {(new Date(weather.dt * 1000))
-                  .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
-                }
-              </h4>
+            <>
               <CityContext.Provider value={{cityAndParams}}>
-                <Weather /> 
+                <div className="today-forecast">
+                  <Weather /> 
+                </div>
               </CityContext.Provider>
               <Forecast /> 
             </>
@@ -247,7 +272,6 @@ const mapStateToProps = state => {
   return {
     cities: state.citiesData.cities,
     citiesLoader : state.citiesData.loader,
-    citiesAPI : state.citiesData.citiesAPI,
     weather: state.weatherData.weather,
     weatherLoader: state.weatherData.weatherLoader,
     currentLocation: state.locationData.currLocation,

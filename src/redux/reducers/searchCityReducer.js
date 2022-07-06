@@ -8,7 +8,6 @@ import {
 const initialState = {
   cities: [],
   loader: false,
-  citiesAPI: []
 }
 
 export const searchCityReducer = (state = initialState, action) => {
@@ -24,7 +23,6 @@ export const searchCityReducer = (state = initialState, action) => {
         ...state,
         loader: false,
         cities: action.payload.cities || [],
-        citiesAPI: action.payload.citiesAPI || []
       };
     case FETCH_SEARCH_CITY_FAIL:
       return {
@@ -36,7 +34,6 @@ export const searchCityReducer = (state = initialState, action) => {
       return {
         ...state,
         cities: [],
-        citiesAPI: []
       };
     default: 
       return state;

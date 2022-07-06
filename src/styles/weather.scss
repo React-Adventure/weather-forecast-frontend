@@ -1,5 +1,43 @@
 @import './variables.scss';
 
+/*----------------- Forecast & weather --------------------*/
+.forecast,
+.weather {
+  &-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: $cards-bg !important; 
+  }
+
+  &-card {
+    border-radius: 10px;
+    color: $theme-color;
+  }
+  
+  &-card-measure {
+    margin-left: 5px;
+  }
+}
+
+.today-weather-title {
+  flex: 0 1 100%;
+
+  margin-top: 20px;
+  margin-bottom: 50px;
+
+  text-align: center;
+  color: $theme-color;
+}
+
+.weather-forecast-loader {
+  position: relative;
+  top: 50px;
+}
+
+/*----------------- Weather --------------------*/
+
 .weather-wrapper {
   display: flex;
   flex-direction: column;
@@ -10,24 +48,13 @@
   position: relative;
 }
 
-.weather {
-  &-cards-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-  
+.weather {  
   &-card {
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+
     height: 200px;
     width: 250px;
-    padding: 20px 0;
-
-    background: $cards-bg !important;   
+    padding: 20px 0;   
 
     &-content {
       display: flex;
@@ -48,13 +75,10 @@
   }
 
   &-icon {
-    flex: 0 1 100%;
-    order: -1;
-    margin-bottom: 0;
-
-    height: 200px;
-
-    background: transparent !important;
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
   }
 
   &-togglers {
@@ -84,51 +108,34 @@
 /*----------------- Forecast --------------------*/
 .forecast {
   &-cards-wrap {
+    flex: 0 1 100%;
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+
+    border-radius: 10px;
+    color: $theme-color;
   }
 
   &-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+
     height: 180px;
     width: 150px;
-    padding-bottom: 10px;
-
-    background: $cards-bg !important;  
+    padding-bottom: 10px;  
   }
+  &-cards-wrap .row {
+    margin: 20px;
+}
 }
 
 
 .weekly-forecast-title {
   flex: 0 1 100%;
+  // margin-top: 50px;
 
   color: $theme-color;
   text-align: center;
-}
-
-/*----------------- Forecast & weather --------------------*/
-.forecast,
-.weather {
-  &-card,
-  &-cards-wrap {
-    border-radius: 10px;
-    color: $theme-color;
-  }
-  
-  &-card-measure {
-    margin-left: 5px;
-  }
-}
-
-.today-weather-title {
-  margin: 0;
-  margin-top: 20px;
-
-  text-align: center;
-  color: $theme-color;
 }

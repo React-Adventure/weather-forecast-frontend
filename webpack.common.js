@@ -1,16 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const port = process.env.PORT || 3000;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-  mode: 'development',
   entry:  path.join(__dirname, "src", "index.js"),
   output: {
     path: path.resolve(__dirname, "dist")
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -42,12 +39,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
       favicon: path.join(__dirname, "public", "favicon.ico")
-    })
+    }),
+    // new BundleAnalyzerPlugin(),
   ],
-  devServer: {
-    host: 'localhost',
-    port: port,
-    historyApiFallback: true,
-    open: true
-  }
 };

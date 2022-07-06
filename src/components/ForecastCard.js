@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { getIconURL } from '../utils/API';
 import { MEASUREMENT_SYSTEM, MEASUREMENT } from './consts';
 import MeasurementSystemContext from './context/MeasurementSystemContext';
 
@@ -12,7 +13,7 @@ const ForecastCard = (props) => {
 
   useEffect(() => {
     if(forecast) {
-      setIconSrc(`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`);
+      setIconSrc(getIconURL(forecast.weather[0].icon));
       setIconAlt(forecast.weather[0].description);
     }
   }, [forecast]);
@@ -23,7 +24,7 @@ const ForecastCard = (props) => {
     <div className="row">
       <div className="col s12">
         <div className="card forecast-card">
-          <img src={iconSrc} alt={iconAlt}></img>
+          <img className="w-h-100" src={iconSrc} alt={iconAlt}></img>
           <h5 className="f-w-600" style={{margin: 0}}>
           {Math.round(forecast?.temp?.min)} / {Math.round(forecast?.temp?.max)} &#xb0;
                 <span className="forecast-card-measure">
@@ -37,4 +38,4 @@ const ForecastCard = (props) => {
   );
 };
 
-export default ForecastCard;
+export default React.memo(ForecastCard);

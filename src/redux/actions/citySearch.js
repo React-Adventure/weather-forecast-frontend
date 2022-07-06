@@ -4,8 +4,6 @@ import {
   FETCH_SEARCH_CITY_FAIL,
   CLEAN_SEARCH_RESULTS
 } from '../types';
-import cities from 'cities.json';
-import { citySearchURL } from '../api.js';
 
 export const addSearchParams = (value) => {
   if(!value) {
@@ -27,17 +25,14 @@ export const fetchSearchCities = (search) => {
       dispatch({
         type: FETCH_SEARCH_CITY_LOADING
       });
-
-      const json_mocked = cities.sort((curr, next) => (curr.name > next.name) ? 1 : ((next.name > curr.name) ? -1 : 0));
       
-      const url = citySearchURL(city);
+      const cities = await import('cities.json');
 
-      const res = await fetch(url);
-      const json = await res.json();
+      const json_mocked = cities.default.sort((curr, next) => (curr.name > next.name) ? 1 : ((next.name > curr.name) ? -1 : 0));
 
       dispatch({
         type: FETCH_SEARCH_CITY_SUCCESS,
-        payload: { cities: json_mocked, citiesAPI: json }
+        payload: { cities: json_mocked }
       });
 
     } catch(err) {
